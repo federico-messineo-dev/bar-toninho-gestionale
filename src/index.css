@@ -190,6 +190,11 @@
   overscroll-behavior-x: contain;
 }
 
+html, body, #root {
+  overflow-x: hidden;
+  overscroll-behavior-x: contain;
+}
+
 /* Scroll arrows: hidden on mobile (touch), visible on hover for desktop */
 .scroll-arrow-btn {
   opacity: 0;

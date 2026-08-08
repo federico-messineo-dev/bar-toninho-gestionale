@@ -34,7 +34,7 @@ const ProductsPage: React.FC = () => {
   });
 
   return (
-    <div className="pb-28 max-w-[1200px] mx-auto w-full px-4 md:px-8 pt-4 md:pt-8 min-h-screen animate-[fadeIn_0.3s_ease]">
+    <div className="pb-28 max-w-[1200px] mx-auto w-full px-4 md:px-8 pt-4 md:pt-8 min-h-screen animate-[fadeIn_0.3s_ease] overflow-x-hidden">
       <div className="mb-6">
         <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-3 tracking-tight font-bold">Prodotti</h1>
         <div className="flex items-center gap-2">
@@ -69,7 +69,7 @@ const ProductsPage: React.FC = () => {
         </div>
       </ScrollArrows>
 
-      <div className="flex gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-6">
         {STOCK_FILTERS.map((f) => {
           const count = f.key === 'all' ? allItems.length
             : f.key === 'low' ? allItems.filter((p) => p.stock > 0 && p.stock <= (p.min_stock || 2)).length
