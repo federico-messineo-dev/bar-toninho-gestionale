@@ -8,7 +8,7 @@ import { SEED_USERS } from '../db/seed';
 import type { AppRole, AuthUser } from '../types';
 import RAW_PRODUCTS from '../data/prodotti.json';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { fullSync, uploadImageToStorage, deleteImageFromStorage } from '../utils/syncQueue';
+import { fullSync, uploadImageToStorage, deleteImageFromStorage, syncPendingProducts } from '../utils/syncQueue';
 
 const PRODUCT_IMAGES: Record<string, string> = {
   '1':
@@ -152,11 +152,13 @@ const useAppStore = create<AppState>((set, get) => ({
   toastMessage: null,
 
   hydrate: async () => {
+    let reseeded = false;
     await db.transaction('rw', [db.products, db.users, db.movements], async () => {
       const count = await db.products.count();
       if (count === 0) {
+        reseeded = true;
         const mapped: ProductDoc[] = (RAW_PRODUCTS as any[]).map((p) =>
-          sanitizeProduct({ ...p, synced: true })
+          sanitizeProduct({ ...p, synced: false })
         );
         await db.products.bulkPut(mapped);
       }
@@ -183,9 +185,15 @@ const useAppStore = create<AppState>((set, get) => ({
     set({ hydrated: true, products, users, movements });
 
     if (isSupabaseConfigured && navigator.onLine) {
-      fullSync().then(() => {
-        db.products.toArray().then((fresh) => set({ products: fresh }));
-      });
+      if (reseeded) {
+        syncPendingProducts().then(() => {
+          db.products.toArray().then((fresh) => set({ products: fresh }));
+        });
+      } else {
+        fullSync().then(() => {
+          db.products.toArray().then((fresh) => set({ products: fresh }));
+        });
+      }
     }
   },
 
