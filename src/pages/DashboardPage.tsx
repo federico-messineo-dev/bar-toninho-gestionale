@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import ScrollArrows from '../components/ScrollArrows';
@@ -9,9 +9,16 @@ const DashboardPage: React.FC = () => {
   const lowStockProducts = useAppStore((s) => s.lowStockProducts);
   const restockProduct = useAppStore((s) => s.restockProduct);
   const selectProduct = useAppStore((s) => s.selectProduct);
+  const todaySalesAmount = useAppStore((s) => s.todaySalesAmount);
+  const todaySalesCount = useAppStore((s) => s.todaySalesCount);
+  const resetTodaySales = useAppStore((s) => s.resetTodaySales);
+
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const low = lowStockProducts();
   const activeQRCount = products.filter((p) => p.active).length > 0 ? 1 : 0;
+  const salesAmount = todaySalesAmount();
+  const salesCount = todaySalesCount();
 
   return (
     <div className="p-4 md:p-8 lg:px-12 max-w-[1440px] mx-auto w-full pb-28 md:pb-12 animate-[fadeIn_0.3s_ease]">
@@ -59,7 +66,14 @@ const DashboardPage: React.FC = () => {
               <span className="font-label-md text-label-md text-outline">Vendite Oggi</span>
               <span className="material-symbols-outlined text-primary/70">euro_symbol</span>
             </div>
-            <span className="font-display-lg text-display-lg text-primary">€0</span>
+            <span className="font-display-lg text-display-lg text-primary">€{salesAmount.toFixed(2)}</span>
+            <span className="font-label-sm text-label-sm text-outline mt-1">{salesCount} vendit{salesCount === 1 ? 'a' : 'e'}</span>
+            <button
+              onClick={() => setShowResetConfirm(true)}
+              className="mt-3 w-full text-xs text-outline hover:text-error transition-colors cursor-pointer py-1"
+            >
+              Azzerare vendite
+            </button>
           </div>
         </div>
       </div>
@@ -112,6 +126,31 @@ const DashboardPage: React.FC = () => {
         ))}
         </div>
       </ScrollArrows>
+
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-surface rounded-3xl p-6 max-w-sm w-full soft-shadow border border-outline-variant animate-[fadeIn_0.15s_ease]">
+            <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Azzerare vendite di oggi?</h3>
+            <p className="font-body-md text-body-md text-outline mb-6">
+              Il totale di €{salesAmount.toFixed(2)} ({salesCount} vendit{salesCount === 1 ? 'a' : 'e'}) verrà azzerato. Questa azione non può essere annullata.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 py-3 rounded-full border border-outline-variant font-label-md text-label-md text-on-surface hover:bg-surface-container transition-colors cursor-pointer"
+              >
+                Annulla
+              </button>
+              <button
+                onClick={() => { resetTodaySales(); setShowResetConfirm(false); }}
+                className="flex-1 py-3 rounded-full bg-error text-on-error font-label-md text-label-md hover:bg-error/80 transition-colors cursor-pointer"
+              >
+                Azzerare
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

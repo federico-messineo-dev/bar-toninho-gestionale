@@ -80,6 +80,26 @@ function toUserView(u: UserDoc) {
   };
 }
 
+function getSalesResetAt(): string {
+  try {
+    return localStorage.getItem('salesResetAt') || '';
+  } catch {
+    return '';
+  }
+}
+
+function setSalesResetAt(iso: string) {
+  try {
+    localStorage.setItem('salesResetAt', iso);
+  } catch { /* noop */ }
+}
+
+function todayStart2AM(): Date {
+  const d = new Date();
+  d.setHours(2, 0, 0, 0);
+  return d;
+}
+
 interface AppState {
   hydrated: boolean;
   authUser: AuthUser | null;
@@ -115,6 +135,9 @@ interface AppState {
   lowStockProducts: () => ProductDoc[];
   publicProducts: () => ProductDoc[];
   filteredProducts: () => ProductDoc[];
+  todaySalesAmount: () => number;
+  todaySalesCount: () => number;
+  resetTodaySales: () => void;
 }
 
 const useAppStore = create<AppState>((set, get) => ({
@@ -148,6 +171,14 @@ const useAppStore = create<AppState>((set, get) => ({
       db.users.toArray(),
       db.movements.orderBy('id').reverse().toArray(),
     ]);
+
+    // Auto-reset sales at 2 AM
+    const resetAt = getSalesResetAt();
+    const now = new Date();
+    const cutoff = todayStart2AM();
+    if (now >= cutoff && (!resetAt || new Date(resetAt) < cutoff)) {
+      setSalesResetAt(now.toISOString());
+    }
 
     set({ hydrated: true, products, users, movements });
 
@@ -391,6 +422,30 @@ const useAppStore = create<AppState>((set, get) => ({
         (p.description || '').toLowerCase().includes(q);
       return matchesCategory && matchesSearch;
     });
+  },
+
+  todaySalesAmount: () => {
+    const { movements, products } = get();
+    const resetAt = getSalesResetAt();
+    const from = resetAt ? new Date(resetAt) : todayStart2AM();
+    return movements
+      .filter((m) => m.type === 'sale' && new Date(m.at) >= from)
+      .reduce((sum, m) => {
+        const p = products.find((pp) => pp.id === m.product_id);
+        return sum + (p ? m.qty * p.price : 0);
+      }, 0);
+  },
+
+  todaySalesCount: () => {
+    const { movements } = get();
+    const resetAt = getSalesResetAt();
+    const from = resetAt ? new Date(resetAt) : todayStart2AM();
+    return movements.filter((m) => m.type === 'sale' && new Date(m.at) >= from).length;
+  },
+
+  resetTodaySales: () => {
+    setSalesResetAt(new Date().toISOString());
+    get().showToast('Vendite di oggi azzerate');
   },
 }));
 
