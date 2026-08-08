@@ -108,13 +108,12 @@ export async function syncPendingProducts(): Promise<number> {
     const unsyncedMovements = allMovements.filter((m) => !m.synced);
     for (const movement of unsyncedMovements) {
       try {
-        const { error } = await supabase.from('movements').upsert({
-          id: movement.id,
+        const { error } = await supabase.from('movements').insert({
           product_id: movement.product_id,
           type: movement.type,
-          qty: movement.qty,
-          at: movement.at,
-        }, { onConflict: 'id' });
+          quantity: movement.qty,
+          created_at: movement.at,
+        });
 
         if (!error) {
           await db.movements.update(movement.id, { synced: true });

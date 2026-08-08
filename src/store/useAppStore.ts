@@ -298,7 +298,7 @@ const useAppStore = create<AppState>((set, get) => ({
 
     if (isSupabaseConfigured && navigator.onLine) {
       await supabase.from('products').upsert({ id, stock: newStock, updated_at: now }, { onConflict: 'id' });
-      await supabase.from('movements').upsert({ id: movementId, product_id: id, type: 'sale', qty, at: now }, { onConflict: 'id' });
+      await supabase.from('movements').insert({ product_id: id, type: 'sale', quantity: qty, created_at: now });
       await db.products.update(id, { synced: true });
       await db.movements.update(movementId, { synced: true });
     }
@@ -317,7 +317,7 @@ const useAppStore = create<AppState>((set, get) => ({
 
     if (isSupabaseConfigured && navigator.onLine) {
       await supabase.from('products').upsert({ id, stock: newStock, updated_at: now }, { onConflict: 'id' });
-      await supabase.from('movements').upsert({ id: movementId, product_id: id, type: 'restock', qty, at: now }, { onConflict: 'id' });
+      await supabase.from('movements').insert({ product_id: id, type: 'restock', quantity: qty, created_at: now });
       await db.products.update(id, { synced: true });
       await db.movements.update(movementId, { synced: true });
     }
