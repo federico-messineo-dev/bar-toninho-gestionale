@@ -25,8 +25,8 @@ const NavigationSidebar: React.FC = () => {
 
   return (
     <aside className="hidden lg:flex flex-col w-64 h-screen bg-[#FFFDD0] border-r border-[#E5E0D6] p-6 fixed left-0 top-0 z-30">
-      <div className="flex items-center gap-3 mb-10 pl-2">
-        <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-10 w-auto" />
+      <div className="flex flex-col items-center mb-10">
+        <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-14 w-auto mb-1" />
         <p className="font-body-sm text-outline text-[11px]">Gestione Magazzino</p>
       </div>
 
