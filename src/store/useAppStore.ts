@@ -8,7 +8,7 @@ import { SEED_USERS } from '../db/seed';
 import type { AppRole, AuthUser } from '../types';
 import RAW_PRODUCTS from '../data/prodotti.json';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { fullSync, uploadImageToStorage } from '../utils/syncQueue';
+import { fullSync, uploadImageToStorage, deleteImageFromStorage } from '../utils/syncQueue';
 
 const PRODUCT_IMAGES: Record<string, string> = {
   '1':
@@ -204,6 +204,7 @@ const useAppStore = create<AppState>((set, get) => ({
   },
 
   updateProduct: async (patch) => {
+    const oldProduct = await db.products.get(patch.id);
     const update: Partial<ProductDoc> = {
       ...patch,
       updated_at: new Date().toISOString(),
@@ -218,6 +219,9 @@ const useAppStore = create<AppState>((set, get) => ({
       if (product) {
         let imageUrl = product.image_url;
         if (imageUrl && imageUrl.startsWith('data:')) {
+          if (oldProduct?.image_url && oldProduct.image_url.startsWith('http')) {
+            await deleteImageFromStorage(oldProduct.image_url);
+          }
           const uploaded = await uploadImageToStorage(product.id, imageUrl);
           if (uploaded) {
             imageUrl = uploaded;
@@ -396,12 +400,16 @@ const useAppStore = create<AppState>((set, get) => ({
   },
 
   deleteProduct: async (id) => {
+    const product = await db.products.get(id);
     await db.products.delete(id);
     const products = await db.products.toArray();
     set({ products, selectedProductId: null });
     get().showToast(`Prodotto eliminato`);
 
     if (isSupabaseConfigured && navigator.onLine) {
+      if (product?.image_url && product.image_url.startsWith('http')) {
+        await deleteImageFromStorage(product.image_url);
+      }
       await supabase.from('products').delete().eq('id', id);
     }
   },

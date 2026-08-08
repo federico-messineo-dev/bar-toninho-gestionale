@@ -53,6 +53,26 @@ export async function uploadImageToStorage(productId: string, base64Data: string
   }
 }
 
+function extractStorageFileName(url: string): string | null {
+  const marker = 'product-images/';
+  const idx = url.indexOf(marker);
+  if (idx === -1) return null;
+  const after = url.slice(idx + marker.length);
+  const qIdx = after.indexOf('?');
+  return qIdx === -1 ? after : after.slice(0, qIdx);
+}
+
+export async function deleteImageFromStorage(url: string): Promise<void> {
+  if (!isSupabaseConfigured || !navigator.onLine) return;
+  const fileName = extractStorageFileName(url);
+  if (!fileName) return;
+  try {
+    await supabase.storage.from('product-images').remove([fileName]);
+  } catch (e) {
+    console.error('[Sync] Image delete failed:', e);
+  }
+}
+
 export async function syncPendingProducts(): Promise<number> {
   if (!isSupabaseConfigured || !navigator.onLine) return 0;
 
