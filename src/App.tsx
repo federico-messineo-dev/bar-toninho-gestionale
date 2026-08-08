@@ -4,6 +4,7 @@ import useAppStore from './store/useAppStore';
 import { useAuth } from './hooks/useAuth';
 import { useRealtimeProducts } from './hooks/useRealtimeProducts';
 import { startOnlineSyncListener } from './utils/syncQueue';
+import DebugOverlay from './components/DebugOverlay';
 
 import AdminLayout from './pages/AdminLayout';
 import DashboardPage from './pages/DashboardPage';
@@ -55,6 +56,7 @@ const App: React.FC = () => {
 
   return (
     <>
+      <DebugOverlay />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/menu" element={<PublicMenu />} />
