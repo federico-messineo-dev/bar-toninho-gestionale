@@ -4,9 +4,8 @@ import useAppStore from '../store/useAppStore';
 import ScrollArrows from '../components/ScrollArrows';
 
 const CATEGORIES = [
-  'Tutti', 'Amari', 'Vino', 'Spumante', 'Champagne', 'Grappa',
-  'Whisky', 'Rum', 'Cognac', 'Armagnac', 'Vermouth', 'Liquori',
-  'Gin', 'Birra', 'Confezioni',
+  'Tutti', 'Spumante', 'Amari', 'Champagne', 'Birra', 'Vino',
+  'Rum', 'Grappa', 'Armagnac',
 ];
 
 const STOCK_FILTERS = [

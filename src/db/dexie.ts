@@ -75,4 +75,12 @@ db.version(3).stores({
   });
 });
 
+db.version(4).stores({
+  products: 'id, category, supplier, active, stock, min_stock, updated_at, synced',
+  users: 'id, role, email',
+  movements: '++id, product_id, type, at, synced',
+}).upgrade(async (tx) => {
+  await tx.table('products').clear();
+});
+
 export default db;
