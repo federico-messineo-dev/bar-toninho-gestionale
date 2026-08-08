@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import ScrollArrows from '../components/ScrollArrows';
@@ -7,6 +7,12 @@ const CATEGORIES = [
   'Tutti', 'Amari', 'Vino', 'Spumante', 'Champagne', 'Grappa',
   'Whisky', 'Rum', 'Cognac', 'Armagnac', 'Vermouth', 'Liquori',
   'Gin', 'Birra', 'Confezioni',
+];
+
+const STOCK_FILTERS = [
+  { key: 'all' as const, label: 'Tutti', icon: 'inventory_2' },
+  { key: 'low' as const, label: 'In esaurimento', icon: 'warning' },
+  { key: 'out' as const, label: 'Esauriti', icon: 'block' },
 ];
 
 const ProductsPage: React.FC = () => {
@@ -18,7 +24,14 @@ const ProductsPage: React.FC = () => {
   const filteredProducts = useAppStore((s) => s.filteredProducts);
   const selectProduct = useAppStore((s) => s.selectProduct);
 
-  const items = filteredProducts();
+  const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out'>('all');
+
+  const allItems = filteredProducts();
+  const items = allItems.filter((p) => {
+    if (stockFilter === 'low') return p.stock > 0 && p.stock <= (p.min_stock || 2);
+    if (stockFilter === 'out') return p.stock === 0;
+    return true;
+  });
 
   return (
     <div className="pb-28 max-w-[1200px] mx-auto w-full px-4 md:px-8 pt-4 md:pt-8 min-h-screen animate-[fadeIn_0.3s_ease]">
@@ -55,6 +68,31 @@ const ProductsPage: React.FC = () => {
           ))}
         </div>
       </ScrollArrows>
+
+      <div className="flex gap-2 mb-6">
+        {STOCK_FILTERS.map((f) => {
+          const count = f.key === 'all' ? allItems.length
+            : f.key === 'low' ? allItems.filter((p) => p.stock > 0 && p.stock <= (p.min_stock || 2)).length
+            : allItems.filter((p) => p.stock === 0).length;
+          return (
+            <button
+              key={f.key}
+              onClick={() => setStockFilter(f.key)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-label-sm text-label-sm transition-colors cursor-pointer active:scale-95 ${
+                stockFilter === f.key
+                  ? 'bg-primary-container text-on-primary shadow-sm font-semibold'
+                  : 'border border-outline-variant text-on-surface-variant hover:bg-surface-variant'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[16px]">{f.icon}</span>
+              {f.label}
+              <span className={`ml-0.5 text-[11px] px-1.5 py-0.5 rounded-full ${
+                stockFilter === f.key ? 'bg-on-primary/20' : 'bg-outline-variant/30'
+              }`}>{count}</span>
+            </button>
+          );
+        })}
+      </div>
 
       <main>
         {items.length === 0 ? (
