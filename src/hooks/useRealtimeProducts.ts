@@ -27,72 +27,23 @@ function mapRemoteToDoc(remote: Record<string, any>): ProductDoc {
   };
 }
 
-let _eventReceived = false;
+const POLL_INTERVAL = 3000;
 
-async function handleRealtimeEvent(payload: any) {
-  console.log('[Realtime] Callback chiamata', payload);
-  _eventReceived = true;
-
-  const eventType = payload.eventType;
-  const remote = payload.new as Record<string, any> | undefined;
-  const oldRow = payload.old as Record<string, any> | undefined;
-
-  console.log('[Realtime] Evento ricevuto:', eventType, remote?.id || oldRow?.id);
-
-  if (eventType === 'DELETE') {
-    const deletedId = oldRow?.id;
-    if (!deletedId) return;
-    await db.products.delete(deletedId);
-    const products = await db.products.toArray();
-    useAppStore.setState({ products });
-    return;
-  }
-
-  if (!remote?.id) return;
-
-  const local = await db.products.get(remote.id);
-
-  if (!local) {
-    const doc = mapRemoteToDoc(remote);
-    await db.products.put(doc);
-    const products = await db.products.toArray();
-    useAppStore.setState({ products });
-    return;
-  }
-
-  if (local.synced) {
-    const doc = mapRemoteToDoc(remote);
-    await db.products.put(doc);
-    const products = await db.products.toArray();
-    useAppStore.setState({ products });
-    return;
-  }
-
-  const remoteTime = new Date(remote.updated_at || 0).getTime();
-  const localTime = new Date(local.updated_at || 0).getTime();
-
-  if (remoteTime > localTime) {
-    const doc = mapRemoteToDoc(remote);
-    await db.products.put(doc);
-    const products = await db.products.toArray();
-    useAppStore.setState({ products });
-  } else {
-    console.log('[Realtime] Aggiornamento scartato: locale più recente per', remote.id);
-  }
-}
+let _lastSyncAt: string | null = null;
 
 async function pollProducts() {
-  console.log('[Polling] Recupero prodotti da Supabase...');
   try {
-    const { data: remoteProducts, error } = await supabase
-      .from('products')
-      .select('*')
-      .order('updated_at', { ascending: false });
+    let query = supabase.from('products').select('*');
 
-    if (error || !remoteProducts) {
-      console.error('[Polling] Errore:', error?.message);
-      return;
+    if (_lastSyncAt) {
+      query = query.gt('updated_at', _lastSyncAt);
     }
+
+    const { data: remoteProducts, error } = await query.order('updated_at', { ascending: false });
+
+    if (error || !remoteProducts || remoteProducts.length === 0) return;
+
+    _lastSyncAt = remoteProducts[0]?.updated_at || _lastSyncAt;
 
     let updated = 0;
     for (const remote of remoteProducts) {
@@ -106,114 +57,100 @@ async function pollProducts() {
     if (updated > 0) {
       const products = await db.products.toArray();
       useAppStore.setState({ products });
-      console.log(`[Polling] ${updated} prodotti aggiornati`);
     }
-  } catch (e) {
-    console.error('[Polling] Eccezione:', e);
+  } catch {
+    // silent
+  }
+}
+
+async function handleRealtimeEvent(payload: any) {
+  const remote = payload.new as Record<string, any> | undefined;
+  const oldRow = payload.old as Record<string, any> | undefined;
+
+  if (payload.eventType === 'DELETE' && oldRow?.id) {
+    await db.products.delete(oldRow.id);
+    const products = await db.products.toArray();
+    useAppStore.setState({ products });
+    return;
+  }
+
+  if (!remote?.id) return;
+
+  const local = await db.products.get(remote.id);
+  if (!local || new Date(remote.updated_at) > new Date(local.updated_at)) {
+    await db.products.put(mapRemoteToDoc(remote));
+    const products = await db.products.toArray();
+    useAppStore.setState({ products });
   }
 }
 
 export function useRealtimeProducts() {
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
-  const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const safetyRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  const startPolling = useCallback(() => {
+    if (pollRef.current) return;
+    pollProducts();
+    pollRef.current = setInterval(pollProducts, POLL_INTERVAL);
+  }, []);
 
   const stopPolling = useCallback(() => {
     if (pollRef.current) {
       clearInterval(pollRef.current);
       pollRef.current = null;
     }
-    if (safetyRef.current) {
-      clearTimeout(safetyRef.current);
-      safetyRef.current = null;
-    }
   }, []);
 
-  const cleanup = useCallback(() => {
-    stopPolling();
-    if (retryRef.current) {
-      clearTimeout(retryRef.current);
-      retryRef.current = null;
-    }
-    if (channelRef.current) {
-      console.log('[Realtime] Disconnessione canale precedente');
-      supabase.removeChannel(channelRef.current);
-      channelRef.current = null;
-    }
-  }, [stopPolling]);
-
-  const startPollingIfNeeded = useCallback(() => {
-    stopPolling();
-    _eventReceived = false;
-
-    safetyRef.current = setTimeout(() => {
-      if (!_eventReceived) {
-        console.warn('[Realtime] Nessun evento ricevuto dopo 10s, avvio polling ogni 5s');
-        pollProducts();
-        pollRef.current = setInterval(pollProducts, 5000);
-      }
-    }, 10000);
-  }, [stopPolling]);
-
-  const subscribe = useCallback(() => {
-    cleanup();
-
-    if (!isSupabaseConfigured || !navigator.onLine) return;
-
-    console.log('[Realtime] Tentativo di connessione...');
+  const startRealtime = useCallback(() => {
+    if (channelRef.current || !isSupabaseConfigured) return;
 
     const channel = supabase
       .channel('products-realtime')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'products' },
-        handleRealtimeEvent
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, handleRealtimeEvent)
       .subscribe((status) => {
-        console.log('[Realtime] Stato canale:', status);
         if (status === 'SUBSCRIBED') {
-          console.log('[Realtime] Connesso e in ascolto sulla tabella products');
-          startPollingIfNeeded();
-        } else if (status === 'CHANNEL_ERROR') {
-          console.error('[Realtime] Errore canale, riconnessione tra 3s...');
-          retryRef.current = setTimeout(() => subscribe(), 3000);
-        } else if (status === 'CLOSED') {
-          console.warn('[Realtime] Canale chiuso, riconnessione tra 3s...');
-          retryRef.current = setTimeout(() => subscribe(), 3000);
+          console.log('[Sync] Realtime connesso');
+        } else if (status === 'CHANNEL_ERROR' || status === 'CLOSED') {
+          console.warn('[Sync] Realtime non disponibile, polling attivo');
+          setTimeout(() => {
+            if (channelRef.current) {
+              supabase.removeChannel(channelRef.current);
+              channelRef.current = null;
+            }
+          }, 1000);
         }
       });
 
     channelRef.current = channel;
-  }, [cleanup, startPollingIfNeeded]);
+  }, []);
+
+  const cleanup = useCallback(() => {
+    stopPolling();
+    if (channelRef.current) {
+      supabase.removeChannel(channelRef.current);
+      channelRef.current = null;
+    }
+    _lastSyncAt = null;
+  }, [stopPolling]);
 
   useEffect(() => {
-    const handleOnline = () => {
-      console.log('[Realtime] Online rilevato');
-      setIsOnline(true);
-    };
-    const handleOffline = () => {
-      console.log('[Realtime] Offline rilevato');
-      setIsOnline(false);
-    };
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
+    const on = () => setIsOnline(true);
+    const off = () => setIsOnline(false);
+    window.addEventListener('online', on);
+    window.addEventListener('offline', off);
+    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off); };
   }, []);
 
   useEffect(() => {
-    if (isOnline) {
-      subscribe();
-    } else {
+    if (!isOnline || !isSupabaseConfigured) {
       cleanup();
+      return;
     }
 
+    startPolling();
+    startRealtime();
+
     return cleanup;
-  }, [isOnline, subscribe, cleanup]);
+  }, [isOnline, startPolling, startRealtime, cleanup]);
 }
