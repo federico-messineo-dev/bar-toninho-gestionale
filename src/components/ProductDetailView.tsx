@@ -3,21 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import useAppStore from '../store/useAppStore';
 import ScrollArrows from './ScrollArrows';
+import { convertToWebp } from '../utils/imageUtils';
+import { deleteImageFromStorage } from '../utils/syncQueue';
 
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const tabs = ['Dettagli', 'Movimenti', 'QR Code'];
-
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 const ProductDetailView: React.FC = () => {
   const navigate = useNavigate();
@@ -47,6 +40,7 @@ const ProductDetailView: React.FC = () => {
   const [editImage, setEditImage] = useState<string | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [showFullscreen, setShowFullscreen] = useState(false);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -55,14 +49,22 @@ const ProductDetailView: React.FC = () => {
       alert('Immagine troppo grande (max 5MB).');
       return;
     }
-    const base64 = await fileToBase64(file);
-    setEditImage(base64);
-    setImagePreview(base64);
+    const converted = await convertToWebp(file);
+    setEditImage(converted.dataUrl);
+    setImagePreview(converted.dataUrl);
   };
 
   const handleRemoveImage = () => {
     setEditImage('');
     setImagePreview(null);
+  };
+
+  const handleRemovePhoto = async () => {
+    if (!selectedProduct) return;
+    if (selectedProduct.image_url && selectedProduct.image_url.startsWith('http')) {
+      await deleteImageFromStorage(selectedProduct.image_url);
+    }
+    updateProduct({ id: selectedProduct.id, image_url: '' });
   };
 
   const handleSaveEdits = () => {
@@ -141,8 +143,25 @@ const ProductDetailView: React.FC = () => {
 
       <div className="bg-[#FFFDD0] rounded-3xl soft-shadow border border-[#E5E0D6] overflow-hidden mb-6">
         {displayImage ? (
-          <div className="h-40 md:h-52 bg-surface-variant relative overflow-hidden">
-            <img src={displayImage} alt={selectedProduct.name} className="w-full h-full object-cover" />
+          <div
+            className="h-40 md:h-52 bg-surface-variant relative overflow-hidden cursor-pointer group"
+            onClick={() => !isEditing && setShowFullscreen(true)}
+          >
+            <img src={displayImage} alt={selectedProduct.name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+            {!isEditing && (
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                <span className="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">zoom_in</span>
+              </div>
+            )}
+            {!isEditing && selectedProduct.image_url && (
+              <button
+                onClick={(e) => { e.stopPropagation(); handleRemovePhoto(); }}
+                className="absolute top-2 right-2 w-8 h-8 bg-error/80 hover:bg-error text-white rounded-full flex items-center justify-center cursor-pointer active:scale-90 transition-colors shadow-sm"
+                title="Rimuovi foto"
+              >
+                <span className="material-symbols-outlined text-[18px]">delete</span>
+              </button>
+            )}
           </div>
         ) : (
           <div className="h-40 md:h-52 bg-surface-variant flex items-center justify-center">
@@ -418,6 +437,26 @@ const ProductDetailView: React.FC = () => {
               Apri Menu in una Nuova Scheda
             </button>
           </div>
+        </div>
+      )}
+
+      {showFullscreen && displayImage && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setShowFullscreen(false)}
+        >
+          <button
+            onClick={() => setShowFullscreen(false)}
+            className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center cursor-pointer z-10 transition-colors"
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
+          <img
+            src={displayImage}
+            alt={selectedProduct.name}
+            className="max-w-full max-h-full object-contain rounded-lg animate-[fadeIn_0.2s_ease]"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       )}
 
