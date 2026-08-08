@@ -95,7 +95,7 @@ const ProductFormPage: React.FC = () => {
     navigate(`/prodotti/${id}`);
   };
 
-  const inputClass = 'w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md';
+  const inputClass = 'w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md';
 
   return (
     <div className="max-w-[700px] mx-auto w-full px-4 md:px-8 pt-4 md:pt-8 pb-28 md:pb-12 min-h-screen animate-[fadeIn_0.3s_ease]">
@@ -136,11 +136,11 @@ const ProductFormPage: React.FC = () => {
               </div>
             )}
             <div className="flex flex-col gap-2">
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95">
+              <button type="button" onClick={() => fileInputRef.current?.click()} className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95">
                 <span className="material-symbols-outlined text-[16px]">add_a_photo</span>
                 Carica foto
               </button>
-              <button type="button" onClick={() => { if (fileInputRef.current) { fileInputRef.current.setAttribute('capture', 'environment'); fileInputRef.current.click(); setTimeout(() => fileInputRef.current?.removeAttribute('capture'), 100); } }} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95">
+              <button type="button" onClick={() => { if (fileInputRef.current) { fileInputRef.current.setAttribute('capture', 'environment'); fileInputRef.current.click(); setTimeout(() => fileInputRef.current?.removeAttribute('capture'), 100); } }} className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95">
                 <span className="material-symbols-outlined text-[16px]">photo_camera</span>
                 Scatta foto
               </button>
@@ -213,10 +213,10 @@ const ProductFormPage: React.FC = () => {
         </div>
 
         <div className="flex justify-end gap-3 pt-4 border-t border-outline-variant/30">
-          <button type="button" onClick={() => navigate('/prodotti')} className="px-5 py-3 rounded-xl bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95">
+          <button type="button" onClick={() => navigate('/prodotti')} className="px-5 py-3 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95">
             Annulla
           </button>
-          <button type="submit" disabled={saving} className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 disabled:opacity-70">
+          <button type="submit" disabled={saving} className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 disabled:opacity-70">
             {saving ? (
               <span className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] animate-spin">autorenew</span>

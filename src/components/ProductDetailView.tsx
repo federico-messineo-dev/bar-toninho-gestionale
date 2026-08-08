@@ -119,7 +119,7 @@ const ProductDetailView: React.FC = () => {
         </p>
         <button
           onClick={() => navigate('/prodotti')}
-          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
         >
           Vai a Prodotti
         </button>
@@ -187,10 +187,10 @@ const ProductDetailView: React.FC = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className="relative px-4 py-2.5 font-label-lg rounded-xl transition-colors cursor-pointer active:scale-95"
+            className="relative px-4 py-2.5 font-label-lg rounded-full transition-colors cursor-pointer active:scale-95"
           >
             {activeTab === tab && (
-              <div className="absolute inset-0 bg-primary-container rounded-xl -z-10" />
+              <div className="absolute inset-0 bg-primary-container rounded-full -z-10" />
             )}
             <span className={activeTab === tab ? 'text-on-primary font-semibold' : 'text-on-surface-variant'}>{tab}</span>
           </button>
@@ -207,7 +207,7 @@ const ProductDetailView: React.FC = () => {
                 <input
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                  className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                 />
               </div>
 
@@ -215,7 +215,7 @@ const ProductDetailView: React.FC = () => {
                 <label className="font-label-md text-label-md text-outline block mb-2">Foto Prodotto</label>
                 <div className="flex gap-3 items-start">
                   {imagePreview ? (
-                    <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-outline-variant shrink-0">
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden border border-outline-variant shrink-0">
                       <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                       <button
                         type="button"
@@ -226,7 +226,7 @@ const ProductDetailView: React.FC = () => {
                       </button>
                     </div>
                   ) : (
-                    <div className="w-24 h-24 rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-outline shrink-0">
+                    <div className="w-24 h-24 rounded-full border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-outline shrink-0">
                       <span className="material-symbols-outlined text-2xl">image</span>
                       <span className="text-[10px] mt-0.5">Nessuna</span>
                     </div>
@@ -235,7 +235,7 @@ const ProductDetailView: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => fileInputRef.current?.click()}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95"
+                      className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95"
                     >
                       <span className="material-symbols-outlined text-[16px]">add_a_photo</span>
                       Carica foto
@@ -249,7 +249,7 @@ const ProductDetailView: React.FC = () => {
                           setTimeout(() => fileInputRef.current?.removeAttribute('capture'), 100);
                         }
                       }}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95"
+                      className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-lowest border border-outline-variant hover:bg-surface-variant transition-colors font-label-md text-label-md cursor-pointer active:scale-95"
                     >
                       <span className="material-symbols-outlined text-[16px]">photo_camera</span>
                       Scatta foto
@@ -272,7 +272,7 @@ const ProductDetailView: React.FC = () => {
                     type="number"
                     value={editPrice}
                     onChange={(e) => setEditPrice(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                    className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                   />
                 </div>
                 <div>
@@ -281,7 +281,7 @@ const ProductDetailView: React.FC = () => {
                     type="number"
                     value={editStock}
                     onChange={(e) => setEditStock(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                    className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                   />
                 </div>
                 <div>
@@ -290,7 +290,7 @@ const ProductDetailView: React.FC = () => {
                     type="number"
                     value={editMinStock}
                     onChange={(e) => setEditMinStock(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                    className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                   />
                 </div>
                 <div>
@@ -298,7 +298,7 @@ const ProductDetailView: React.FC = () => {
                   <input
                     value={editSupplier}
                     onChange={(e) => setEditSupplier(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                    className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                   />
                 </div>
                 <div>
@@ -306,7 +306,7 @@ const ProductDetailView: React.FC = () => {
                   <input
                     value={editBarcode}
                     onChange={(e) => setEditBarcode(e.target.value)}
-                    className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
+                    className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md"
                   />
                 </div>
               </div>
@@ -315,13 +315,13 @@ const ProductDetailView: React.FC = () => {
                 <textarea
                   value={editNotes}
                   onChange={(e) => setEditNotes(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md h-24 resize-none"
+                  className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md h-24 resize-none"
                 />
               </div>
               <div className="flex justify-end mt-6">
                 <button
                   onClick={handleSaveEdits}
-                  className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+                  className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
                 >
                   Salva Modifiche
                 </button>
@@ -366,21 +366,21 @@ const ProductDetailView: React.FC = () => {
               <div className="flex gap-3 pt-4 border-t border-outline-variant/30">
                 <button
                   onClick={() => restockProduct(selectedProduct.id)}
-                  className="flex-1 py-3.5 bg-[#3d6b4f] text-white rounded-xl hover:bg-[#2f543f] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm cursor-pointer active:scale-[0.97]"
+                  className="flex-1 py-3.5 bg-[#3d6b4f] text-white rounded-full hover:bg-[#2f543f] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm cursor-pointer active:scale-[0.97]"
                 >
                   <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span> Rifornisci (+1)
                 </button>
                 <button
                   onClick={() => sellProduct(selectedProduct.id)}
                   disabled={selectedProduct.stock <= 0}
-                  className="flex-1 py-3.5 bg-[#ba1a1a] text-white rounded-xl hover:bg-[#941515] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm disabled:opacity-50 cursor-pointer active:scale-[0.97]"
+                  className="flex-1 py-3.5 bg-[#ba1a1a] text-white rounded-full hover:bg-[#941515] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm disabled:opacity-50 cursor-pointer active:scale-[0.97]"
                 >
                   <span className="material-symbols-outlined text-[18px]">remove_shopping_cart</span> Vendi (-1)
                 </button>
               </div>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="w-full py-3 mt-2 bg-surface-container-lowest text-on-error rounded-xl hover:bg-error-container transition-colors font-label-md flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
+                className="w-full py-3 mt-2 bg-surface-container-lowest text-on-error rounded-full hover:bg-error-container transition-colors font-label-md flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
               >
                 <span className="material-symbols-outlined text-[18px]">delete</span> Elimina Prodotto
               </button>
@@ -413,7 +413,7 @@ const ProductDetailView: React.FC = () => {
           <div className="mt-6">
             <button
               onClick={() => window.open('/menu', '_blank')}
-              className="bg-primary-container text-on-primary font-label-md px-6 py-2.5 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+              className="bg-primary-container text-on-primary font-label-md px-6 py-2.5 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
             >
               Apri Menu in una Nuova Scheda
             </button>
@@ -437,13 +437,13 @@ const ProductDetailView: React.FC = () => {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95"
               >
                 Annulla
               </button>
               <button
                 onClick={handleDeleteProduct}
-                className="px-4 py-2 rounded-xl bg-error text-on-error hover:bg-error/90 transition-colors font-label-md cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-full bg-error text-on-error hover:bg-error/90 transition-colors font-label-md cursor-pointer active:scale-95"
               >
                 Elimina
               </button>

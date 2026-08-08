@@ -30,7 +30,7 @@ const MenuQRPage: React.FC = () => {
 
         <button
           onClick={() => window.open('/menu', '_blank')}
-          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 mb-6"
+          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 mb-6"
         >
           Apri Menu Anteprima
         </button>
@@ -52,7 +52,7 @@ const MenuQRPage: React.FC = () => {
             {products.map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between items-center py-2 px-3 bg-[#FFFDD0] rounded-xl border border-[#E5E0D6]/50 hover:bg-primary-container/30 transition-colors"
+                className="flex justify-between items-center py-2 px-3 bg-[#FFFDD0] rounded-full border border-[#E5E0D6]/50 hover:bg-primary-container/30 transition-colors"
               >
                 <span className="font-body-md text-on-surface truncate pr-4">{item.name}</span>
                 <span className="font-label-md text-outline shrink-0">Scorta: {item.stock}</span>

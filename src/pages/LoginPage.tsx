@@ -72,7 +72,7 @@ const LoginPage: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-error-container text-on-error p-3 rounded-xl font-label-sm animate-[slideDown_0.2s_ease]">
+            <div className="bg-error-container text-on-error p-3 rounded-full font-label-sm animate-[slideDown_0.2s_ease]">
               {error}
             </div>
           )}
@@ -85,7 +85,7 @@ const LoginPage: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="e-mail"
               required
-              className="w-full bg-surface-container-lowest border border-outline-variant p-3 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md placeholder:text-outline-variant"
+              className="w-full bg-surface-container-lowest border border-outline-variant p-3 rounded-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md placeholder:text-outline-variant"
             />
           </div>
 
@@ -97,14 +97,14 @@ const LoginPage: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               required
-              className="w-full bg-surface-container-lowest border border-outline-variant p-3 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md placeholder:text-outline-variant"
+              className="w-full bg-surface-container-lowest border border-outline-variant p-3 rounded-full focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md placeholder:text-outline-variant"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading || authLoading}
-            className="w-full bg-primary text-white font-label-lg py-3.5 rounded-xl shadow-md hover:bg-primary/90 transition-colors disabled:opacity-70 cursor-pointer active:scale-[0.98]"
+            className="w-full bg-primary text-white font-label-lg py-3.5 rounded-full shadow-md hover:bg-primary/90 transition-colors disabled:opacity-70 cursor-pointer active:scale-[0.98]"
           >
             {loading || authLoading ? (
               <span className="flex items-center justify-center gap-2">

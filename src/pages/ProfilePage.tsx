@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
       <div className="max-w-lg mx-auto">
         <div className="bg-[#FFFDD0] rounded-3xl p-6 soft-shadow border border-[#E5E0D6] mb-6">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-primary rounded-3xl flex items-center justify-center shadow-sm">
+            <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-sm">
               <span className="text-white font-headline-md text-headline-md">{authUser.name.charAt(0)}</span>
             </div>
             <div>
@@ -50,15 +50,15 @@ const ProfilePage: React.FC = () => {
             <input
               type="password"
               placeholder="Vecchia Password"
-              className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
+              className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
             />
             <input
               type="password"
               placeholder="Nuova Password"
-              className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
+              className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
             />
             <button
-              className="bg-primary-container text-on-primary font-label-md px-4 py-2.5 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+              className="bg-primary-container text-on-primary font-label-md px-4 py-2.5 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
             >
               Aggiorna Password
             </button>
@@ -68,7 +68,7 @@ const ProfilePage: React.FC = () => {
         <div className="mt-6">
           <button
             onClick={async () => { storeLogout(); await supabaseLogout(); navigate('/login', { replace: true }); }}
-            className="w-full bg-surface-container-lowest text-on-error font-label-lg py-3 rounded-xl hover:bg-error-container transition-colors shadow-sm flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
+            className="w-full bg-surface-container-lowest text-on-error font-label-lg py-3 rounded-full hover:bg-error-container transition-colors shadow-sm flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[18px]">logout</span>
             Esci dall'Account

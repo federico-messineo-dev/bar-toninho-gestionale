@@ -23,15 +23,15 @@ const ScrollRightArrow: React.FC<ScrollRightArrowProps> = ({ children, className
 
   return (
     <div className={`relative group/scroll ${className}`}>
-      <div ref={ref} className="overflow-x-auto hide-scrollbar">
+      <div ref={ref} className="overflow-x-auto hide-scrollbar pr-10">
         {children}
       </div>
       {showArrow && (
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-end pr-1 bg-gradient-to-l from-[#FEF9EF] via-[#FEF9EF] to-transparent to-60% pointer-events-none opacity-0 group-hover/scroll:opacity-100 transition-opacity z-10 cursor-pointer pointer-events-auto"
+          className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center opacity-0 group-hover/scroll:opacity-100 transition-opacity z-10 cursor-pointer"
         >
-          <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/80 rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
+          <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
             chevron_right
           </span>
         </button>

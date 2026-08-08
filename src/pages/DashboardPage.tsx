@@ -103,7 +103,7 @@ const DashboardPage: React.FC = () => {
 
             <button
               onClick={() => restockProduct(item.id)}
-              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-xl hover:bg-primary transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-95"
+              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-full hover:bg-primary transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-95"
             >
               <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span>
               Rifornisci

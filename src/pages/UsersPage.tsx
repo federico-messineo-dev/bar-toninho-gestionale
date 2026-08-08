@@ -24,7 +24,7 @@ const UsersPage: React.FC = () => {
         <h2 className="font-headline-lg text-headline-lg text-on-surface">Gestione Utenti</h2>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-primary-container text-on-primary font-label-md px-4 py-2 rounded-xl hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+          className="bg-primary-container text-on-primary font-label-md px-4 py-2 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
         >
           + Aggiungi
         </button>
@@ -77,12 +77,12 @@ const UsersPage: React.FC = () => {
                 placeholder="Nome"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                className="w-full p-3 rounded-xl border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
+                className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
               />
               <div className="flex gap-2">
                 <button
                   onClick={() => setNewRole('staff')}
-                  className={`flex-1 py-2.5 rounded-xl font-label-md transition-colors cursor-pointer active:scale-95 ${
+                  className={`flex-1 py-2.5 rounded-full font-label-md transition-colors cursor-pointer active:scale-95 ${
                     newRole === 'staff' ? 'bg-primary-container text-on-primary shadow-sm' : 'bg-surface-container-lowest text-on-surface border border-outline-variant'
                   }`}
                 >
@@ -90,7 +90,7 @@ const UsersPage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setNewRole('admin')}
-                  className={`flex-1 py-2.5 rounded-xl font-label-md transition-colors cursor-pointer active:scale-95 ${
+                  className={`flex-1 py-2.5 rounded-full font-label-md transition-colors cursor-pointer active:scale-95 ${
                     newRole === 'admin' ? 'bg-primary-container text-on-primary shadow-sm' : 'bg-surface-container-lowest text-on-surface border border-outline-variant'
                   }`}
                 >
@@ -101,13 +101,13 @@ const UsersPage: React.FC = () => {
             <div className="flex justify-end gap-3 mt-6">
               <button
                 onClick={() => setShowModal(false)}
-                className="px-4 py-2 rounded-xl bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95"
               >
                 Annulla
               </button>
               <button
                 onClick={handleAddUser}
-                className="px-4 py-2 rounded-xl bg-primary-container text-on-primary hover:bg-primary transition-colors font-label-md cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-full bg-primary-container text-on-primary hover:bg-primary transition-colors font-label-md cursor-pointer active:scale-95"
               >
                 Salva
               </button>
