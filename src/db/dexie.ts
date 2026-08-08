@@ -83,4 +83,13 @@ db.version(4).stores({
   await tx.table('products').clear();
 });
 
+db.version(5).stores({
+  products: 'id, category, supplier, active, stock, min_stock, updated_at, synced',
+  users: 'id, role, email',
+  movements: '++id, product_id, type, at, synced',
+}).upgrade(async (tx) => {
+  await tx.table('users').clear();
+  await tx.table('users').bulkAdd(SEED_USERS);
+});
+
 export default db;
