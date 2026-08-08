@@ -83,7 +83,7 @@ const LoginPage: React.FC = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="gaia@bottega.it"
+              placeholder="e-mail"
               required
               className="w-full bg-surface-container-lowest border border-outline-variant p-3 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md placeholder:text-outline-variant"
             />
