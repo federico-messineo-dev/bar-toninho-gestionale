@@ -23,9 +23,8 @@ const LEVEL_LABELS: Record<string, string> = {
 
 export default function DebugOverlay() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const tapRef = useRef(0);
 
   const addLog = useCallback((level: LogEntry['level'], args: any[]) => {
     const message = args
@@ -76,68 +75,58 @@ export default function DebugOverlay() {
     }
   }, [logs]);
 
-  const handleDoubleTap = useCallback(() => {
-    const now = Date.now();
-    if (now - tapRef.current < 300) {
-      setVisible((v) => !v);
-      tapRef.current = 0;
-    } else {
-      tapRef.current = now;
-    }
-  }, []);
-
   if (!import.meta.env.DEV) return null;
+  if (!visible) return null;
 
   return (
-    <>
-      <div
-        onDoubleClick={handleDoubleTap}
-        className="fixed top-0 left-0 w-16 h-16 z-[9999]"
-        style={{ WebkitTapHighlightColor: 'transparent' }}
-      />
-      {visible && (
-        <div
-          className="fixed bottom-0 left-0 right-0 z-[9998] pointer-events-auto"
-          style={{ maxHeight: '200px' }}
-        >
-          <div className="flex items-center justify-between px-3 py-1 bg-black/80 border-t border-white/10">
-            <span className="text-[10px] font-mono text-white/50">
-              Debug Console ({logs.length})
-            </span>
-            <button
-              onClick={() => setLogs([])}
-              className="text-[10px] font-mono text-white/40 hover:text-white/80 cursor-pointer"
-            >
-              Clear
-            </button>
-          </div>
-          <div
-            ref={scrollRef}
-            className="overflow-y-auto bg-black/75 backdrop-blur-sm border-t border-white/5"
-            style={{ maxHeight: '170px' }}
+    <div
+      className="fixed bottom-0 left-0 right-0 pointer-events-auto"
+      style={{ maxHeight: '200px', zIndex: 9999 }}
+    >
+      <div className="flex items-center justify-between px-3 py-1 bg-black/80 border-t border-white/10">
+        <span className="text-[10px] font-mono text-white/50">
+          Debug ({logs.length})
+        </span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setLogs([])}
+            className="text-[10px] font-mono text-white/40 hover:text-white/80 cursor-pointer"
           >
-            {logs.map((entry) => {
-              const colors = LEVEL_COLORS[entry.level];
-              return (
-                <div
-                  key={entry.id}
-                  className="px-3 py-0.5 border-b border-white/5 font-mono text-[11px] leading-tight flex gap-2"
-                  style={{ backgroundColor: colors.bg }}
-                >
-                  <span className="text-white/30 shrink-0 w-[70px]">{entry.timestamp}</span>
-                  <span
-                    className="shrink-0 w-[32px] font-bold"
-                    style={{ color: colors.text }}
-                  >
-                    {LEVEL_LABELS[entry.level]}
-                  </span>
-                  <span className="text-white/80 break-all whitespace-pre-wrap">{entry.message}</span>
-                </div>
-              );
-            })}
-          </div>
+            Clear
+          </button>
+          <button
+            onClick={() => setVisible(false)}
+            className="text-[10px] font-mono text-white/40 hover:text-white/80 cursor-pointer px-1"
+          >
+            ✕
+          </button>
         </div>
-      )}
-    </>
+      </div>
+      <div
+        ref={scrollRef}
+        className="overflow-y-auto bg-black/75 backdrop-blur-sm border-t border-white/5"
+        style={{ maxHeight: '170px', WebkitOverflowScrolling: 'touch' }}
+      >
+        {logs.map((entry) => {
+          const colors = LEVEL_COLORS[entry.level];
+          return (
+            <div
+              key={entry.id}
+              className="px-3 py-0.5 border-b border-white/5 font-mono text-[11px] leading-tight flex gap-2"
+              style={{ backgroundColor: colors.bg }}
+            >
+              <span className="text-white/30 shrink-0 w-[70px]">{entry.timestamp}</span>
+              <span
+                className="shrink-0 w-[32px] font-bold"
+                style={{ color: colors.text }}
+              >
+                {LEVEL_LABELS[entry.level]}
+              </span>
+              <span className="text-white/80 break-all whitespace-pre-wrap">{entry.message}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }
