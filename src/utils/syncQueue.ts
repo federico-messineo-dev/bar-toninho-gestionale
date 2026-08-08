@@ -32,7 +32,7 @@ function base64ToBlob(base64: string): Blob {
 export async function uploadImageToStorage(productId: string, base64Data: string): Promise<string | null> {
   if (!isSupabaseConfigured || !navigator.onLine) return null;
   try {
-    const ext = base64Data.includes('image/png') ? 'png' : 'jpg';
+    const ext = base64Data.includes('image/webp') ? 'webp' : base64Data.includes('image/png') ? 'png' : 'jpg';
     const fileName = `${productId}-${Date.now()}.${ext}`;
     const blob = base64ToBlob(base64Data);
 

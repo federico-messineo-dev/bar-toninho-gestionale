@@ -1,21 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import { convertToWebp } from '../utils/imageUtils';
 
 const CATEGORIES = [
   'Amari', 'Vino', 'Spumante', 'Champagne', 'Grappa',
   'Whisky', 'Rum', 'Cognac', 'Armagnac', 'Vermouth', 'Calvados',
   'Liquori', 'Gin', 'Birra', 'Confezioni',
 ];
-
-function fileToBase64(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 const ProductFormPage: React.FC = () => {
   const navigate = useNavigate();
@@ -48,9 +40,9 @@ const ProductFormPage: React.FC = () => {
       setErrors({ image: 'Immagine troppo grande (max 5MB).' });
       return;
     }
-    const base64 = await fileToBase64(file);
-    setImage(base64);
-    setImagePreview(base64);
+    const converted = await convertToWebp(file);
+    setImage(converted.dataUrl);
+    setImagePreview(converted.dataUrl);
     setErrors((prev) => { const { image: _, ...rest } = prev; return rest; });
   };
 
