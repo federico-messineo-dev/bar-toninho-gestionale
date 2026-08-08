@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
 
       <div className="bg-[#FFFDD0] rounded-3xl p-8 md:p-10 w-full max-w-md shadow-2xl relative z-10 border border-white/20 animate-[fadeIn_0.4s_ease]">
         <div className="text-center mb-8">
-          <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-14 w-auto mx-auto mb-3" />
+          <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-20 w-auto mx-auto mb-3" />
           <p className="font-body-md text-outline">Gestione Magazzino e Menu</p>
         </div>
 
