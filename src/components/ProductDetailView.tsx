@@ -2,7 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import useAppStore from '../store/useAppStore';
-import ScrollRightArrow from './ScrollRightArrow';
+import ScrollArrows from './ScrollArrows';
 
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
@@ -181,7 +181,7 @@ const ProductDetailView: React.FC = () => {
         </div>
       </div>
 
-      <ScrollRightArrow className="mb-6">
+      <ScrollArrows className="mb-6">
         <div className="flex gap-2 border-b border-outline-variant/30 pb-1 w-max">
           {tabs.map((tab) => (
           <button
@@ -196,7 +196,7 @@ const ProductDetailView: React.FC = () => {
           </button>
         ))}
         </div>
-      </ScrollRightArrow>
+      </ScrollArrows>
 
       {activeTab === 'Dettagli' && (
         <div>

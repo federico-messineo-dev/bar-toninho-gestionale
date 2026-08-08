@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product, ActiveTab } from '../types';
-import ScrollRightArrow from './ScrollRightArrow';
+import ScrollArrows from './ScrollArrows';
 
 interface DashboardViewProps {
   products: Product[];
@@ -103,7 +103,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Low Stock Horizontal Carousel / Grid */}
-      <ScrollRightArrow>
+      <ScrollArrows>
         <div className="flex pb-4 gap-4 snap-x">
           {lowStockItems.map((item) => (
           <div
@@ -146,7 +146,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </div>
         ))}
         </div>
-      </ScrollRightArrow>
+      </ScrollArrows>
     </div>
   );
 };

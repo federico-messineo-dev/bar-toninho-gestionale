@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
-import ScrollRightArrow from '../components/ScrollRightArrow';
+import ScrollArrows from '../components/ScrollArrows';
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const DashboardPage: React.FC = () => {
         </button>
       </div>
 
-      <ScrollRightArrow>
+      <ScrollArrows>
         <div className="flex flex-nowrap pb-4 gap-4 snap-x">
           {low.map((item) => (
           <div
@@ -111,7 +111,7 @@ const DashboardPage: React.FC = () => {
           </div>
         ))}
         </div>
-      </ScrollRightArrow>
+      </ScrollArrows>
     </div>
   );
 };
