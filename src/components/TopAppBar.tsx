@@ -10,11 +10,11 @@ const TopAppBar: React.FC = () => {
   const unsyncedCount = products.filter((p) => !p.synced).length;
 
   const syncColor =
-    !isConfigured ? 'bg-outline/40' :
-    status === 'offline' ? 'bg-[#ba1a1a]' :
-    status === 'syncing' ? 'bg-[#f9a825] animate-pulse' :
-    unsyncedCount > 0 ? 'bg-[#f9a825]' :
-    'bg-[#3d6b4f]';
+    !isConfigured ? 'bg-[#9E9E9E]' :
+    status === 'offline' ? 'bg-[#E53935] shadow-[0_0_6px_rgba(229,57,53,0.6)]' :
+    status === 'syncing' ? 'bg-[#FB8C00] shadow-[0_0_6px_rgba(251,140,0,0.6)] animate-pulse' :
+    unsyncedCount > 0 ? 'bg-[#FB8C00] shadow-[0_0_6px_rgba(251,140,0,0.5)]' :
+    'bg-[#2E7D32] shadow-[0_0_6px_rgba(46,125,50,0.5)]';
 
   const syncTitle =
     !isConfigured ? 'Supabase non configurato' :
@@ -29,7 +29,7 @@ const TopAppBar: React.FC = () => {
         <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-8 w-auto shrink-0" />
         <div className="flex-1" />
         <div
-          className={`w-2.5 h-2.5 rounded-full ${syncColor} shrink-0`}
+          className={`w-3.5 h-3.5 rounded-full ${syncColor} shrink-0`}
           title={syncTitle}
         />
         <button
