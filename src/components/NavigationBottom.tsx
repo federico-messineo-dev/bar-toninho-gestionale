@@ -23,23 +23,23 @@ const NavigationBottom: React.FC = () => {
   }, [navigate]);
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#FFFDD0] border-t border-[#E5E0D6] z-40 shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
-      <div className="flex justify-around items-center h-16 px-2">
+    <nav className="lg:hidden fixed bottom-4 left-4 right-4 z-40 pb-[env(safe-area-inset-bottom)]">
+      <div className="bg-[#FFFDD0]/80 backdrop-blur-md rounded-[40px] shadow-xl shadow-primary/10 border border-[#E5E0D6]/60 px-2 py-1.5 flex justify-around items-center">
         {filteredItems.map((item) => {
           const isActive = activeTab === item.id;
           return (
             <button
               key={item.id}
               onClick={() => handleNav(item.path)}
-              className={`flex flex-col items-center justify-center p-2 rounded-2xl min-w-[56px] transition-colors relative cursor-pointer active:scale-90 ${
-                isActive ? 'text-primary' : 'text-outline'
+              className={`flex flex-col items-center justify-center p-2 rounded-full min-w-[52px] transition-all duration-200 relative cursor-pointer active:scale-90 ${
+                isActive ? 'text-primary' : 'text-outline hover:text-on-surface-variant'
               }`}
             >
               {isActive && (
-                <div className="absolute inset-x-1 -top-1 h-1 bg-primary rounded-full" />
+                <div className="absolute inset-x-2 -top-0.5 h-[3px] bg-primary rounded-full" />
               )}
-              <span className="material-symbols-outlined text-[22px] mb-0.5">{item.icon}</span>
-              <span className="font-label-xs text-[10px] leading-tight">{item.label}</span>
+              <span className={`material-symbols-outlined text-[22px] mb-0.5 ${isActive ? 'font-variation-settings-[\'FILL\'_1]' : ''}`}>{item.icon}</span>
+              <span className={`font-label-xs text-[10px] leading-tight ${isActive ? 'font-semibold' : ''}`}>{item.label}</span>
             </button>
           );
         })}
