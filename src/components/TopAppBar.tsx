@@ -27,6 +27,7 @@ const TopAppBar: React.FC = () => {
     <header className="lg:hidden sticky top-0 z-20 bg-[#FFFDD0] border-b border-[#E5E0D6] p-4 shadow-sm">
       <div className="flex items-center gap-3">
         <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-8 w-auto shrink-0" />
+        <div className="flex-1" />
         <div
           className={`w-2.5 h-2.5 rounded-full ${syncColor} shrink-0`}
           title={syncTitle}
