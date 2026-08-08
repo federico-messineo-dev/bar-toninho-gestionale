@@ -73,7 +73,7 @@ const DashboardPage: React.FC = () => {
         </button>
       </div>
 
-      <div className="flex flex-nowrap overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar">
+      <div className="flex flex-nowrap overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
         {low.map((item) => (
           <div
             key={item.id}

@@ -102,7 +102,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Low Stock Horizontal Carousel / Grid */}
-      <div className="flex overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar">
+      <div className="flex overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
         {lowStockItems.map((item) => (
           <div
             key={item.id}

@@ -37,7 +37,7 @@ const ProductsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-6 overflow-x-auto hide-scrollbar">
+      <div className="mb-6 overflow-x-auto hide-scrollbar scroll-horizontal" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
         <div className="flex gap-2 w-max pb-2">
           {CATEGORIES.map((cat) => (
             <button

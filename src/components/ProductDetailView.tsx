@@ -180,7 +180,7 @@ const ProductDetailView: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-outline-variant/30 pb-1 overflow-x-auto hide-scrollbar">
+      <div className="flex gap-2 mb-6 border-b border-outline-variant/30 pb-1 overflow-x-auto hide-scrollbar scroll-horizontal" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
         {tabs.map((tab) => (
           <button
             key={tab}
