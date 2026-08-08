@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import { useAuth } from '../hooks/useAuth';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import db from '../db/dexie';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -9,7 +11,61 @@ const ProfilePage: React.FC = () => {
   const storeLogout = useAppStore((s) => s.logout);
   const { logout: supabaseLogout } = useAuth();
 
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [pwLoading, setPwLoading] = useState(false);
+  const [pwMessage, setPwMessage] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
+
   if (!authUser) return null;
+
+  const handleChangePassword = async () => {
+    if (!oldPassword || !newPassword) {
+      setPwMessage({ type: 'err', text: 'Compila entrambi i campi.' });
+      return;
+    }
+    if (newPassword.length < 6) {
+      setPwMessage({ type: 'err', text: 'La nuova password deve avere almeno 6 caratteri.' });
+      return;
+    }
+    setPwLoading(true);
+    setPwMessage(null);
+
+    try {
+      if (isSupabaseConfigured) {
+        const { error: signInErr } = await supabase.auth.signInWithPassword({
+          email: authUser.email,
+          password: oldPassword,
+        });
+        if (signInErr) {
+          setPwMessage({ type: 'err', text: 'Vecchia password errata.' });
+          setPwLoading(false);
+          return;
+        }
+        const { error: updateErr } = await supabase.auth.updateUser({ password: newPassword });
+        if (updateErr) {
+          setPwMessage({ type: 'err', text: updateErr.message });
+        } else {
+          setPwMessage({ type: 'ok', text: 'Password aggiornata con successo.' });
+          setOldPassword('');
+          setNewPassword('');
+        }
+      } else {
+        const user = await db.users.where('email').equals(authUser.email).first();
+        if (!user || user.password !== oldPassword) {
+          setPwMessage({ type: 'err', text: 'Vecchia password errata.' });
+          setPwLoading(false);
+          return;
+        }
+        await db.users.update(user.id, { password: newPassword });
+        setPwMessage({ type: 'ok', text: 'Password aggiornata con successo.' });
+        setOldPassword('');
+        setNewPassword('');
+      }
+    } catch {
+      setPwMessage({ type: 'err', text: 'Errore imprevisto.' });
+    }
+    setPwLoading(false);
+  };
 
   return (
     <div className="p-4 md:p-8 lg:px-12 max-w-[1440px] mx-auto w-full pb-28 md:pb-12 min-h-screen animate-[fadeIn_0.3s_ease]">
@@ -50,17 +106,28 @@ const ProfilePage: React.FC = () => {
             <input
               type="password"
               placeholder="Vecchia Password"
+              value={oldPassword}
+              onChange={(e) => { setOldPassword(e.target.value); setPwMessage(null); }}
               className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
             />
             <input
               type="password"
               placeholder="Nuova Password"
+              value={newPassword}
+              onChange={(e) => { setNewPassword(e.target.value); setPwMessage(null); }}
               className="w-full p-3 rounded-full border border-outline-variant focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors font-body-md bg-surface-container-lowest"
             />
+            {pwMessage && (
+              <p className={`text-sm font-label-sm ${pwMessage.type === 'ok' ? 'text-[#4a7c59]' : 'text-error'}`}>
+                {pwMessage.text}
+              </p>
+            )}
             <button
-              className="bg-primary-container text-on-primary font-label-md px-4 py-2.5 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+              onClick={handleChangePassword}
+              disabled={pwLoading}
+              className="bg-primary-container text-on-primary font-label-md px-4 py-2.5 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 disabled:opacity-70"
             >
-              Aggiorna Password
+              {pwLoading ? 'Aggiornamento...' : 'Aggiorna Password'}
             </button>
           </div>
         </div>

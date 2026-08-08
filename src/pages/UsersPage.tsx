@@ -47,7 +47,7 @@ const UsersPage: React.FC = () => {
             </div>
             <div className="flex items-center gap-3">
               <span className="font-label-sm text-label-sm bg-primary-container/20 text-primary-container px-2.5 py-1 rounded-full capitalize">{user.role}</span>
-              {user.email !== 'admin@caffetoninho.it' && authUser?.role === 'admin' && (
+              {user.email !== 'gaia.bilardi25@gmail.com' && authUser?.role === 'admin' && (
                 <button
                   onClick={() => removeUser(user.email)}
                   className="text-outline hover:text-error transition-colors cursor-pointer p-1 active:scale-90"

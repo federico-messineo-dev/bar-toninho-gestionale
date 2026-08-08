@@ -24,7 +24,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onLogout }) => {
             Gaia (Admin)
           </h3>
           <p className="font-body-md text-on-surface-variant text-sm mt-1">
-            Gestore Principale • admin@caffetoninho.it
+            Gestore Principale • gaia.bilardi25@gmail.com
           </p>
           <span className="inline-block mt-3 px-3 py-1 bg-secondary-container text-on-secondary-container font-label-sm text-xs rounded-full font-semibold">
             Super Administrator
