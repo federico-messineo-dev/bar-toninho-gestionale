@@ -15,7 +15,6 @@ function roleFromEmail(email: string): 'admin' | 'staff' {
 
 function nameFromEmail(email: string): string {
   if (email.includes('gaia')) return 'Gaia';
-  if (email.includes('alessio')) return 'Alessio';
   return email.split('@')[0];
 }
 
