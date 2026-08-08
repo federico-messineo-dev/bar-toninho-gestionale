@@ -1,5 +1,6 @@
 import React from 'react';
 import { Product, ActiveTab } from '../types';
+import ScrollRightArrow from './ScrollRightArrow';
 
 interface DashboardViewProps {
   products: Product[];
@@ -102,8 +103,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       </div>
 
       {/* Low Stock Horizontal Carousel / Grid */}
-      <div className="flex overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
-        {lowStockItems.map((item) => (
+      <ScrollRightArrow>
+        <div className="flex pb-4 gap-4 snap-x">
+          {lowStockItems.map((item) => (
           <div
             key={item.id}
             className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-lg soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start hover-lift transition-all"
@@ -143,7 +145,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
             </button>
           </div>
         ))}
-      </div>
+        </div>
+      </ScrollRightArrow>
     </div>
   );
 };

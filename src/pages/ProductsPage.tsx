@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import ScrollRightArrow from '../components/ScrollRightArrow';
 
 const CATEGORIES = [
   'Tutti', 'Amari', 'Vino', 'Spumante', 'Champagne', 'Grappa',
@@ -37,7 +38,7 @@ const ProductsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="mb-6 overflow-x-auto hide-scrollbar scroll-horizontal" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
+      <ScrollRightArrow className="mb-6">
         <div className="flex gap-2 w-max pb-2">
           {CATEGORIES.map((cat) => (
             <button
@@ -53,7 +54,7 @@ const ProductsPage: React.FC = () => {
             </button>
           ))}
         </div>
-      </div>
+      </ScrollRightArrow>
 
       <main>
         {items.length === 0 ? (

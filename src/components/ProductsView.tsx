@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
+import ScrollRightArrow from './ScrollRightArrow';
 
 interface ProductsViewProps {
   products: Product[];
@@ -62,7 +63,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       </div>
 
       {/* Category Filter Chips */}
-      <div className="mb-6 overflow-x-auto hide-scrollbar scroll-horizontal" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
+      <ScrollRightArrow className="mb-6">
         <div className="flex gap-2 w-max pb-2">
           {categories.map((cat) => {
             const isActive = selectedCategory === cat;
@@ -81,7 +82,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             );
           })}
         </div>
-      </div>
+      </ScrollRightArrow>
 
       {/* Product Grid */}
       <main>

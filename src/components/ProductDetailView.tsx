@@ -2,6 +2,7 @@ import React, { useState, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import useAppStore from '../store/useAppStore';
+import ScrollRightArrow from './ScrollRightArrow';
 
 const prefersReducedMotion =
   typeof window !== 'undefined' &&
@@ -180,8 +181,9 @@ const ProductDetailView: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-outline-variant/30 pb-1 overflow-x-auto hide-scrollbar scroll-horizontal" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
-        {tabs.map((tab) => (
+      <ScrollRightArrow className="mb-6">
+        <div className="flex gap-2 border-b border-outline-variant/30 pb-1 w-max">
+          {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
@@ -193,7 +195,8 @@ const ProductDetailView: React.FC = () => {
             <span className={activeTab === tab ? 'text-on-primary font-semibold' : 'text-on-surface-variant'}>{tab}</span>
           </button>
         ))}
-      </div>
+        </div>
+      </ScrollRightArrow>
 
       {activeTab === 'Dettagli' && (
         <div>

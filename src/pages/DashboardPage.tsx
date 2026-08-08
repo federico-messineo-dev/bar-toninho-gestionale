@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import ScrollRightArrow from '../components/ScrollRightArrow';
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
@@ -73,8 +74,9 @@ const DashboardPage: React.FC = () => {
         </button>
       </div>
 
-      <div className="flex flex-nowrap overflow-x-auto pb-4 gap-4 snap-x hide-scrollbar" onWheel={(e) => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.currentTarget.scrollLeft += e.deltaY; e.preventDefault(); } }}>
-        {low.map((item) => (
+      <ScrollRightArrow>
+        <div className="flex flex-nowrap pb-4 gap-4 snap-x">
+          {low.map((item) => (
           <div
             key={item.id}
             className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-3xl soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
@@ -108,7 +110,8 @@ const DashboardPage: React.FC = () => {
             </button>
           </div>
         ))}
-      </div>
+        </div>
+      </ScrollRightArrow>
     </div>
   );
 };
