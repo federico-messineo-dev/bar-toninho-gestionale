@@ -24,7 +24,7 @@ const PublicMenu: React.FC = () => {
 
       <div className="max-w-2xl mx-auto px-4 pt-6 space-y-8">
         {Object.entries(grouped).map(([category, items]: [string, typeof products]) => (
-          <section key={category} className="bg-white rounded-2xl p-5 shadow-sm border border-[#E5E0D6]">
+          <section key={category} className="bg-white rounded-3xl p-5 shadow-sm border border-[#E5E0D6]">
             <h2 className="font-headline-md text-headline-md text-[#722F37] mb-4 border-b border-[#E5E0D6] pb-2">{category}</h2>
             <div className="space-y-3">
               {items.map((item) => (

@@ -14,9 +14,9 @@ const ProfilePage: React.FC = () => {
       </h2>
 
       <div className="max-w-lg mx-auto">
-        <div className="bg-[#FFFDD0] rounded-2xl p-6 soft-shadow border border-[#E5E0D6] mb-6">
+        <div className="bg-[#FFFDD0] rounded-3xl p-6 soft-shadow border border-[#E5E0D6] mb-6">
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center shadow-sm">
+            <div className="w-14 h-14 bg-primary rounded-3xl flex items-center justify-center shadow-sm">
               <span className="text-white font-headline-md text-headline-md">{authUser.name.charAt(0)}</span>
             </div>
             <div>
@@ -40,7 +40,7 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-surface-container-low rounded-2xl p-5 border border-outline-variant/20 shadow-sm">
+        <div className="bg-surface-container-low rounded-3xl p-5 border border-outline-variant/20 shadow-sm">
           <h4 className="font-label-lg text-label-lg text-on-surface mb-3">Cambia Password</h4>
           <div className="space-y-3">
             <input

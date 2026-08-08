@@ -69,7 +69,7 @@ const ProductsPage: React.FC = () => {
                 <div
                   key={product.id}
                   onClick={() => { selectProduct(product.id); navigate(`/prodotti/${product.id}`); }}
-                  className="product-card bg-[#FFFDD0] rounded-2xl border border-[#E5E0D6] overflow-hidden flex flex-col relative cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
+                  className="product-card bg-[#FFFDD0] rounded-3xl border border-[#E5E0D6] overflow-hidden flex flex-col relative cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
                 >
                   <div className="h-32 md:h-40 bg-surface-variant relative overflow-hidden">
                     {product.image_url ? (
@@ -92,7 +92,7 @@ const ProductsPage: React.FC = () => {
 
       <button
         onClick={() => navigate('/prodotti/nuovo')}
-        className="fixed bottom-20 right-5 lg:bottom-8 lg:right-8 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center cursor-pointer active:scale-90 hover:bg-primary/90 transition-colors z-30"
+        className="fixed bottom-20 right-5 lg:bottom-8 lg:right-8 w-14 h-14 bg-primary text-white rounded-3xl shadow-lg flex items-center justify-center cursor-pointer active:scale-90 hover:bg-primary/90 transition-colors z-30"
         title="Aggiungi prodotto"
       >
         <span className="material-symbols-outlined text-[28px]">add</span>

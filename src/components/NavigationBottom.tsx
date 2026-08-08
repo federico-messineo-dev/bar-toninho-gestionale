@@ -24,7 +24,7 @@ const NavigationBottom: React.FC = () => {
 
   return (
     <nav className="lg:hidden fixed bottom-4 left-4 right-4 z-40 pb-[env(safe-area-inset-bottom)]">
-      <div className="bg-[#FFFDD0]/80 backdrop-blur-md rounded-[40px] shadow-xl shadow-primary/10 border border-[#E5E0D6]/60 px-2 py-1.5 flex justify-around items-center">
+      <div className="bg-[#EDE5C8]/85 backdrop-blur-md rounded-[40px] shadow-xl shadow-primary/10 border border-[#E5E0D6]/60 px-2 py-1.5 flex justify-around items-center">
         {filteredItems.map((item) => {
           const isActive = activeTab === item.id;
           return (

@@ -13,7 +13,7 @@ const MenuQRPage: React.FC = () => {
         Menu QR Pubblico
       </h2>
 
-      <div className="bg-[#FFFDD0] p-6 md:p-8 rounded-2xl soft-shadow border border-[#E5E0D6] flex flex-col items-center justify-center text-center">
+      <div className="bg-[#FFFDD0] p-6 md:p-8 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col items-center justify-center text-center">
         <div className="bg-white p-5 rounded-3xl inline-block shadow-md mb-4">
           <QRCodeSVG
             value={menuUrl}
@@ -47,7 +47,7 @@ const MenuQRPage: React.FC = () => {
       </div>
 
       {showList && (
-        <div className="mt-6 bg-surface-container-lowest rounded-2xl p-4 border border-outline-variant/20 shadow-sm animate-[slideDown_0.2s_ease]">
+        <div className="mt-6 bg-surface-container-lowest rounded-3xl p-4 border border-outline-variant/20 shadow-sm animate-[slideDown_0.2s_ease]">
           <div className="max-h-64 overflow-y-auto space-y-2">
             {products.map((item) => (
               <div

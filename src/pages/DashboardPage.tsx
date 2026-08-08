@@ -19,7 +19,7 @@ const DashboardPage: React.FC = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-2xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Prodotti Totali</span>
@@ -29,7 +29,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-2xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between relative overflow-hidden cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between relative overflow-hidden cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full relative z-10">
             <div className="absolute top-0 right-0 w-16 h-16 bg-error-container rounded-bl-full -z-0 opacity-50" />
             <div className="flex justify-between items-start mb-4 relative z-10">
@@ -42,7 +42,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <button onClick={() => navigate('/qr-menu')} className="bg-[#FFFDD0] p-6 rounded-2xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/qr-menu')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Menu QR Attivi</span>
@@ -52,7 +52,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <div className="bg-[#FFFDD0] p-6 rounded-2xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-default">
+        <div className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-default">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Vendite Oggi</span>
@@ -77,7 +77,7 @@ const DashboardPage: React.FC = () => {
         {low.map((item) => (
           <div
             key={item.id}
-            className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-2xl soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
+            className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-3xl soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
           >
             <div
               onClick={() => { selectProduct(item.id); navigate(`/prodotti/${item.id}`); }}

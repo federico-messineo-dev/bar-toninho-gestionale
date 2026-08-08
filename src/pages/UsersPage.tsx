@@ -34,7 +34,7 @@ const UsersPage: React.FC = () => {
         {users.map((user) => (
           <div
             key={user.email}
-            className="bg-[#FFFDD0] rounded-2xl p-4 border border-[#E5E0D6] flex justify-between items-center shadow-sm hover:shadow-md transition-shadow"
+            className="bg-[#FFFDD0] rounded-3xl p-4 border border-[#E5E0D6] flex justify-between items-center shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-primary-container text-on-primary rounded-full flex items-center justify-center font-label-md">

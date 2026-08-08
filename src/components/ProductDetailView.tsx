@@ -138,7 +138,7 @@ const ProductDetailView: React.FC = () => {
         Prodotti
       </button>
 
-      <div className="bg-[#FFFDD0] rounded-2xl soft-shadow border border-[#E5E0D6] overflow-hidden mb-6">
+      <div className="bg-[#FFFDD0] rounded-3xl soft-shadow border border-[#E5E0D6] overflow-hidden mb-6">
         {displayImage ? (
           <div className="h-40 md:h-52 bg-surface-variant relative overflow-hidden">
             <img src={displayImage} alt={selectedProduct.name} className="w-full h-full object-cover" />
@@ -327,26 +327,26 @@ const ProductDetailView: React.FC = () => {
           ) : (
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                   <span className="font-label-md text-label-md text-outline block mb-1">Prezzo</span>
                   <span className="font-headline-md text-headline-md text-primary">€{Number(selectedProduct.price || 0).toFixed(2)}</span>
                 </div>
-                <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                   <span className="font-label-md text-label-md text-outline block mb-1">Scorte Attuali</span>
                   <span className="font-headline-md text-headline-md text-primary">{selectedProduct.stock}</span>
                 </div>
-                <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                   <span className="font-label-md text-label-md text-outline block mb-1">Scorte Minime</span>
                   <span className="font-headline-md text-headline-md text-primary">{selectedProduct.min_stock || 2}</span>
                 </div>
                 {selectedProduct.supplier && (
-                  <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                  <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                     <span className="font-label-md text-label-md text-outline block mb-1">Fornitore</span>
                     <span className="font-body-lg text-body-lg text-on-surface">{selectedProduct.supplier}</span>
                   </div>
                 )}
                 {selectedProduct.barcode && (
-                  <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                  <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                     <span className="font-label-md text-label-md text-outline block mb-1">Codice a Barre</span>
                     <span className="font-body-lg text-body-lg text-on-surface font-mono tracking-wider">{selectedProduct.barcode}</span>
                   </div>
@@ -354,7 +354,7 @@ const ProductDetailView: React.FC = () => {
               </div>
 
               {selectedProduct.notes && (
-                <div className="bg-surface-container-low rounded-2xl p-4 border border-outline-variant/20">
+                <div className="bg-surface-container-low rounded-3xl p-4 border border-outline-variant/20">
                   <span className="font-label-md text-label-md text-outline block mb-1">Note Interne</span>
                   <p className="font-body-md text-body-md text-on-surface whitespace-pre-wrap leading-relaxed">{selectedProduct.notes}</p>
                 </div>
@@ -387,16 +387,16 @@ const ProductDetailView: React.FC = () => {
       )}
 
       {activeTab === 'Movimenti' && (
-        <div className="bg-[#FFFDD0] rounded-2xl p-5 border border-[#E5E0D6] text-center text-outline font-body-md shadow-sm">
+        <div className="bg-[#FFFDD0] rounded-3xl p-5 border border-[#E5E0D6] text-center text-outline font-body-md shadow-sm">
           Cronologia movimenti (placeholder per la registrazione).
         </div>
       )}
 
       {activeTab === 'QR Code' && (
-        <div className="bg-[#FFFDD0] rounded-2xl p-6 border border-[#E5E0D6] text-center shadow-sm">
+        <div className="bg-[#FFFDD0] rounded-3xl p-6 border border-[#E5E0D6] text-center shadow-sm">
           <h3 className="font-headline-md text-headline-md text-primary mb-4">QR Menu Pubblico</h3>
           <p className="font-body-md text-outline mb-6">Mostra questo codice al cliente per il menu.</p>
-          <div className="bg-white p-4 rounded-2xl inline-block shadow-inner">
+          <div className="bg-white p-4 rounded-3xl inline-block shadow-inner">
             <QRCodeSVG
               value={typeof window !== 'undefined' ? window.location.origin + '/menu' : ''}
               size={192}

@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
 
       <div className="bg-[#FFFDD0] rounded-3xl p-8 md:p-10 w-full max-w-md shadow-2xl relative z-10 border border-white/20 animate-[fadeIn_0.4s_ease]">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-md">
+          <div className="w-16 h-16 bg-primary rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-md">
             <span className="material-symbols-outlined text-[32px] text-white">storefront</span>
           </div>
           <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary mb-1 tracking-tight">Caffè Toninho</h1>
