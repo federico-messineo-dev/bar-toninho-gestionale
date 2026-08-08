@@ -27,12 +27,15 @@ function mapRemoteToDoc(remote: Record<string, any>): ProductDoc {
   };
 }
 
-async function handleRealtimeEvent(payload: {
-  eventType: string;
-  new: Record<string, any> | undefined;
-  old: Record<string, any> | undefined;
-}) {
-  const { eventType, new: remote, old: oldRow } = payload;
+let _eventReceived = false;
+
+async function handleRealtimeEvent(payload: any) {
+  console.log('[Realtime] Callback chiamata', payload);
+  _eventReceived = true;
+
+  const eventType = payload.eventType;
+  const remote = payload.new as Record<string, any> | undefined;
+  const oldRow = payload.old as Record<string, any> | undefined;
 
   console.log('[Realtime] Evento ricevuto:', eventType, remote?.id || oldRow?.id);
 
@@ -49,7 +52,6 @@ async function handleRealtimeEvent(payload: {
 
   const local = await db.products.get(remote.id);
 
-  // Prodotto nuovo → accetta sempre
   if (!local) {
     const doc = mapRemoteToDoc(remote);
     await db.products.put(doc);
@@ -58,7 +60,6 @@ async function handleRealtimeEvent(payload: {
     return;
   }
 
-  // Se il prodotto locale è già sincronizzato, il remoto è più recente
   if (local.synced) {
     const doc = mapRemoteToDoc(remote);
     await db.products.put(doc);
@@ -67,7 +68,6 @@ async function handleRealtimeEvent(payload: {
     return;
   }
 
-  // Prodotto locale NON sincronizzato: confronto stretto dei timestamp
   const remoteTime = new Date(remote.updated_at || 0).getTime();
   const localTime = new Date(local.updated_at || 0).getTime();
 
@@ -81,12 +81,58 @@ async function handleRealtimeEvent(payload: {
   }
 }
 
+async function pollProducts() {
+  console.log('[Polling] Recupero prodotti da Supabase...');
+  try {
+    const { data: remoteProducts, error } = await supabase
+      .from('products')
+      .select('*')
+      .order('updated_at', { ascending: false });
+
+    if (error || !remoteProducts) {
+      console.error('[Polling] Errore:', error?.message);
+      return;
+    }
+
+    let updated = 0;
+    for (const remote of remoteProducts) {
+      const local = await db.products.get(remote.id);
+      if (!local || new Date(remote.updated_at) > new Date(local.updated_at)) {
+        await db.products.put(mapRemoteToDoc(remote));
+        updated++;
+      }
+    }
+
+    if (updated > 0) {
+      const products = await db.products.toArray();
+      useAppStore.setState({ products });
+      console.log(`[Polling] ${updated} prodotti aggiornati`);
+    }
+  } catch (e) {
+    console.error('[Polling] Eccezione:', e);
+  }
+}
+
 export function useRealtimeProducts() {
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   const retryRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const safetyRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
+  const stopPolling = useCallback(() => {
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
+    if (safetyRef.current) {
+      clearTimeout(safetyRef.current);
+      safetyRef.current = null;
+    }
+  }, []);
+
   const cleanup = useCallback(() => {
+    stopPolling();
     if (retryRef.current) {
       clearTimeout(retryRef.current);
       retryRef.current = null;
@@ -96,7 +142,20 @@ export function useRealtimeProducts() {
       supabase.removeChannel(channelRef.current);
       channelRef.current = null;
     }
-  }, []);
+  }, [stopPolling]);
+
+  const startPollingIfNeeded = useCallback(() => {
+    stopPolling();
+    _eventReceived = false;
+
+    safetyRef.current = setTimeout(() => {
+      if (!_eventReceived) {
+        console.warn('[Realtime] Nessun evento ricevuto dopo 10s, avvio polling ogni 5s');
+        pollProducts();
+        pollRef.current = setInterval(pollProducts, 5000);
+      }
+    }, 10000);
+  }, [stopPolling]);
 
   const subscribe = useCallback(() => {
     cleanup();
@@ -116,6 +175,7 @@ export function useRealtimeProducts() {
         console.log('[Realtime] Stato canale:', status);
         if (status === 'SUBSCRIBED') {
           console.log('[Realtime] Connesso e in ascolto sulla tabella products');
+          startPollingIfNeeded();
         } else if (status === 'CHANNEL_ERROR') {
           console.error('[Realtime] Errore canale, riconnessione tra 3s...');
           retryRef.current = setTimeout(() => subscribe(), 3000);
@@ -126,9 +186,8 @@ export function useRealtimeProducts() {
       });
 
     channelRef.current = channel;
-  }, [cleanup]);
+  }, [cleanup, startPollingIfNeeded]);
 
-  // Online/offline listener
   useEffect(() => {
     const handleOnline = () => {
       console.log('[Realtime] Online rilevato');
@@ -148,7 +207,6 @@ export function useRealtimeProducts() {
     };
   }, []);
 
-  // Subscribe/unsubscribe in base a isOnline
   useEffect(() => {
     if (isOnline) {
       subscribe();
