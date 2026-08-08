@@ -269,13 +269,18 @@ const useAppStore = create<AppState>((set, get) => ({
   toggleProductVisibility: async (id) => {
     const p = await db.products.get(id);
     if (!p) return;
-    await db.products.update(id, { active: !p.active, updated_at: new Date().toISOString(), synced: false });
+    const now = new Date().toISOString();
+    await db.products.update(id, { active: !p.active, updated_at: now, synced: false });
     const products = await db.products.toArray();
     set({ products });
 
     if (isSupabaseConfigured && navigator.onLine) {
       const { error } = await supabase.from('products').upsert({
-        id, active: !p.active, updated_at: new Date().toISOString(),
+        id: p.id, name: p.name, price: p.price, price_purchase: p.price_purchase,
+        category: p.category, subcategory: p.category, format: p.format, description: p.description,
+        supplier: p.supplier, stock: p.stock, min_stock: p.min_stock, active: !p.active,
+        image_url: p.image_url, barcode: p.barcode, allergens: p.allergens, notes: p.notes,
+        requires_review: p.requires_review, created_at: p.created_at, updated_at: now,
       }, { onConflict: 'id' });
       if (!error) {
         await db.products.update(id, { synced: true });
@@ -297,7 +302,13 @@ const useAppStore = create<AppState>((set, get) => ({
     get().showToast(`Vendita registrata: -${qty} "${p.name}"`);
 
     if (isSupabaseConfigured && navigator.onLine) {
-      await supabase.from('products').upsert({ id, stock: newStock, updated_at: now }, { onConflict: 'id' });
+      await supabase.from('products').upsert({
+        id: p.id, name: p.name, price: p.price, price_purchase: p.price_purchase,
+        category: p.category, subcategory: p.category, format: p.format, description: p.description,
+        supplier: p.supplier, stock: newStock, min_stock: p.min_stock, active: p.active,
+        image_url: p.image_url, barcode: p.barcode, allergens: p.allergens, notes: p.notes,
+        requires_review: p.requires_review, created_at: p.created_at, updated_at: now,
+      }, { onConflict: 'id' });
       await supabase.from('movements').insert({ product_id: id, type: 'sale', quantity: qty, created_at: now });
       await db.products.update(id, { synced: true });
       await db.movements.update(movementId, { synced: true });
@@ -316,7 +327,13 @@ const useAppStore = create<AppState>((set, get) => ({
     get().showToast(`Rifornimento registrato: +${qty} "${p.name}"`);
 
     if (isSupabaseConfigured && navigator.onLine) {
-      await supabase.from('products').upsert({ id, stock: newStock, updated_at: now }, { onConflict: 'id' });
+      await supabase.from('products').upsert({
+        id: p.id, name: p.name, price: p.price, price_purchase: p.price_purchase,
+        category: p.category, subcategory: p.category, format: p.format, description: p.description,
+        supplier: p.supplier, stock: newStock, min_stock: p.min_stock, active: p.active,
+        image_url: p.image_url, barcode: p.barcode, allergens: p.allergens, notes: p.notes,
+        requires_review: p.requires_review, created_at: p.created_at, updated_at: now,
+      }, { onConflict: 'id' });
       await supabase.from('movements').insert({ product_id: id, type: 'restock', quantity: qty, created_at: now });
       await db.products.update(id, { synced: true });
       await db.movements.update(movementId, { synced: true });
