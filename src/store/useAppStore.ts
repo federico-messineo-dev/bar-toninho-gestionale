@@ -101,6 +101,7 @@ interface AppState {
   showToast: (msg: string) => void;
 
   updateProduct: (patch: Partial<ProductDoc> & { id: string }) => Promise<void>;
+  addProduct: (data: Omit<ProductDoc, 'synced' | 'id' | 'created_at' | 'updated_at'>) => Promise<string>;
   toggleProductVisibility: (id: string) => Promise<void>;
   sellProduct: (id: string, qty?: number) => Promise<void>;
   restockProduct: (id: string, qty?: number) => Promise<void>;
@@ -220,6 +221,49 @@ const useAppStore = create<AppState>((set, get) => ({
         }
       }
     }
+  },
+
+  addProduct: async (data) => {
+    const id = crypto.randomUUID();
+    const now = new Date().toISOString();
+    const online = navigator.onLine;
+    const product: ProductDoc = {
+      ...data,
+      id,
+      created_at: now,
+      updated_at: now,
+      synced: online && isSupabaseConfigured,
+    };
+    await db.products.add(product);
+    const products = await db.products.toArray();
+    set({ products });
+
+    if (isSupabaseConfigured && online) {
+      let imageUrl = product.image_url;
+      if (imageUrl && imageUrl.startsWith('data:')) {
+        const uploaded = await uploadImageToStorage(id, imageUrl);
+        if (uploaded) {
+          imageUrl = uploaded;
+          await db.products.update(id, { image_url: imageUrl });
+        }
+      }
+      const { error } = await supabase.from('products').upsert({
+        id, name: product.name, price: product.price, price_purchase: product.price_purchase,
+        category: product.category, format: product.format, description: product.description,
+        supplier: product.supplier, stock: product.stock, min_stock: product.min_stock,
+        active: product.active, image_url: imageUrl, barcode: product.barcode,
+        allergens: product.allergens, notes: product.notes, requires_review: product.requires_review,
+        created_at: now, updated_at: now,
+      }, { onConflict: 'id' });
+      if (!error) {
+        await db.products.update(id, { synced: true });
+        const fresh = await db.products.toArray();
+        set({ products: fresh });
+      }
+    }
+
+    get().showToast(`Prodotto "${product.name}" creato`);
+    return id;
   },
 
   toggleProductVisibility: async (id) => {

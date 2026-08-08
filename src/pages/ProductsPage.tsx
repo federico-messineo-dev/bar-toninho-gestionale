@@ -89,6 +89,14 @@ const ProductsPage: React.FC = () => {
           </div>
         )}
       </main>
+
+      <button
+        onClick={() => navigate('/prodotti/nuovo')}
+        className="fixed bottom-20 right-5 lg:bottom-8 lg:right-8 w-14 h-14 bg-primary text-white rounded-2xl shadow-lg flex items-center justify-center cursor-pointer active:scale-90 hover:bg-primary/90 transition-colors z-30"
+        title="Aggiungi prodotto"
+      >
+        <span className="material-symbols-outlined text-[28px]">add</span>
+      </button>
     </div>
   );
 };

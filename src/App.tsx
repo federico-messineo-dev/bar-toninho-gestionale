@@ -8,6 +8,7 @@ import AdminLayout from './pages/AdminLayout';
 import DashboardPage from './pages/DashboardPage';
 import ProductsPage from './pages/ProductsPage';
 import ProductDetailView from './components/ProductDetailView';
+import ProductFormPage from './pages/ProductFormPage';
 import MenuQRPage from './pages/MenuQRPage';
 import UsersPage from './pages/UsersPage';
 import ProfilePage from './pages/ProfilePage';
@@ -58,6 +59,7 @@ const App: React.FC = () => {
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="prodotti" element={<ProductsPage />} />
+          <Route path="prodotti/nuovo" element={<ProductFormPage />} />
           <Route path="prodotti/:id" element={<ProductDetailView />} />
           <Route path="qr-menu" element={<MenuQRPage />} />
           <Route path="utenti" element={<UsersPage />} />
