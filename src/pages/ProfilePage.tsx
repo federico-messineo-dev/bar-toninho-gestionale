@@ -1,11 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
+import { useAuth } from '../hooks/useAuth';
 
 const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const authUser = useAppStore((s) => s.authUser);
-  const logout = useAppStore((s) => s.logout);
+  const storeLogout = useAppStore((s) => s.logout);
+  const { logout: supabaseLogout } = useAuth();
 
   if (!authUser) return null;
 
@@ -65,7 +67,7 @@ const ProfilePage: React.FC = () => {
 
         <div className="mt-6">
           <button
-            onClick={() => { logout(); navigate('/login', { replace: true }); }}
+            onClick={async () => { storeLogout(); await supabaseLogout(); navigate('/login', { replace: true }); }}
             className="w-full bg-surface-container-lowest text-on-error font-label-lg py-3 rounded-xl hover:bg-error-container transition-colors shadow-sm flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
           >
             <span className="material-symbols-outlined text-[18px]">logout</span>

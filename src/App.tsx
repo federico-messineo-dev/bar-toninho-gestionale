@@ -37,7 +37,7 @@ const App: React.FC = () => {
   }, [hydrate]);
 
   useEffect(() => {
-    if (!authLoading && user) {
+    if (!authLoading) {
       setAuthUser(user);
     }
   }, [user, authLoading, setAuthUser]);
