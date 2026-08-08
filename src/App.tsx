@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import useAppStore from './store/useAppStore';
 import { useAuth } from './hooks/useAuth';
+import { useRealtimeProducts } from './hooks/useRealtimeProducts';
 import { startOnlineSyncListener } from './utils/syncQueue';
 
 import AdminLayout from './pages/AdminLayout';
@@ -41,6 +42,8 @@ const App: React.FC = () => {
       setAuthUser(user);
     }
   }, [user, authLoading, setAuthUser]);
+
+  useRealtimeProducts();
 
   if (authLoading) {
     return (
