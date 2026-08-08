@@ -138,6 +138,7 @@
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Ledger input style */
@@ -187,5 +188,20 @@
 .scroll-horizontal {
   overflow-x: auto;
   overscroll-behavior-x: contain;
+}
+
+/* Scroll arrows: hidden on mobile (touch), visible on hover for desktop */
+.scroll-arrow-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.scroll-arrows-wrap:hover .scroll-arrow-btn {
+  opacity: 1;
+}
+/* On mobile always show arrows if present */
+@media (hover: none) and (pointer: coarse) {
+  .scroll-arrow-btn {
+    opacity: 0.7;
+  }
 }
 

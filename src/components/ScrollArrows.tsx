@@ -27,14 +27,14 @@ const ScrollArrows: React.FC<ScrollArrowsProps> = ({ children, className = '' })
   const scrollLeft = () => ref.current?.scrollBy({ left: -300, behavior: 'smooth' });
 
   return (
-    <div className={`relative group/scroll ${className}`}>
-      <div ref={ref} className="overflow-x-auto hide-scrollbar px-10">
+    <div className={`relative scroll-arrows-wrap ${className}`}>
+      <div ref={ref} className="overflow-x-auto hide-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
         {children}
       </div>
       {showLeft && (
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center opacity-0 group-hover/scroll:opacity-100 transition-opacity z-10 cursor-pointer"
+          className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center z-10 cursor-pointer scroll-arrow-btn"
         >
           <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
             chevron_left
@@ -44,7 +44,7 @@ const ScrollArrows: React.FC<ScrollArrowsProps> = ({ children, className = '' })
       {showRight && (
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center opacity-0 group-hover/scroll:opacity-100 transition-opacity z-10 cursor-pointer"
+          className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center z-10 cursor-pointer scroll-arrow-btn"
         >
           <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
             chevron_right
