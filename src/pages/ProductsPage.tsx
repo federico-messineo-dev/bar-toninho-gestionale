@@ -5,8 +5,9 @@ import ScrollArrows from '../components/ScrollArrows';
 import type { ProductDoc } from '../db/dexie';
 
 const CATEGORIES = [
-  'Tutti', 'Spumante', 'Amari', 'Champagne', 'Birra', 'Vino',
-  'Rum', 'Grappa', 'Armagnac',
+  'Tutti', 'Spumante', 'Champagne', 'Vino', 'Birra', 'Amari',
+  'Liquori', 'Vermouth', 'Grappa', 'Whisky', 'Bourbon', 'Rum',
+  'Tequila', 'Vodka', 'Armagnac',
 ];
 
 const STOCK_FILTERS = [

@@ -4,8 +4,9 @@ import useAppStore from '../store/useAppStore';
 import { convertToWebp } from '../utils/imageUtils';
 
 const CATEGORIES = [
-  'Spumante', 'Amari', 'Champagne', 'Birra', 'Vino',
-  'Rum', 'Grappa', 'Armagnac',
+  'Spumante', 'Champagne', 'Vino', 'Birra', 'Amari',
+  'Liquori', 'Vermouth', 'Grappa', 'Whisky', 'Bourbon', 'Rum',
+  'Tequila', 'Vodka', 'Armagnac',
 ];
 
 const ProductFormPage: React.FC = () => {
