@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import useAppStore from './store/useAppStore';
 import { useAuth } from './hooks/useAuth';
 import { useRealtimeProducts } from './hooks/useRealtimeProducts';
@@ -16,6 +16,14 @@ import UsersPage from './pages/UsersPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import PublicMenu from './pages/PublicMenu';
+
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const authUser = useAppStore((s) => s.authUser);
@@ -57,6 +65,7 @@ const App: React.FC = () => {
   return (
     <>
       <DebugOverlay />
+      <ScrollToTop />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/menu" element={<PublicMenu />} />
