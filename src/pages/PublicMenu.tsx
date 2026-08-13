@@ -14,8 +14,8 @@ const PublicMenu: React.FC = () => {
   }, [products]);
 
   return (
-    <div className="min-h-screen bg-[#1B1512] font-sans pb-8">
-      <div className="bg-[#32271F] text-[#F3E9D7] p-6 shadow-lg">
+    <div className="min-h-screen bg-transparent font-sans pb-8">
+      <div className="bg-[#3D3125] text-[#F3E9D7] p-6 shadow-lg">
         <div className="max-w-2xl mx-auto text-center">
           <h1 className="font-headline-lg-mobile text-headline-lg-mobile font-bold tracking-tight">Caffè Toninho</h1>
           <p className="font-body-md text-[#F3E9D7]/80 mt-1">Il nostro menu completo</p>

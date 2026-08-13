@@ -58,7 +58,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#32271F] via-[#1B1512] to-[#120D0A] p-4 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-[rgba(26,19,13,0.45)] p-4 relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-0 left-0 w-96 h-96 bg-[#C68B5C] rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#C68B5C] rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />

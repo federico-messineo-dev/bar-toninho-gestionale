@@ -2,10 +2,10 @@
 
 @theme {
   /* Palette principale calda */
-  --color-base: #1B1512;
-  --color-card: #2A211A;
-  --color-elevated: #32271F;
-  --color-overlay: #120D0A;
+  --color-base: #251D16;
+  --color-card: #342A20;
+  --color-elevated: #3D3125;
+  --color-overlay: #1A130D;
 
   --color-accent: #C68B5C;
   --color-accent-hover: #D99E6C;
@@ -19,39 +19,39 @@
   /* Mapping token design system -> palette */
   --color-primary: #C68B5C;
   --color-primary-container: #C68B5C;
-  --color-on-primary: #1B1512;
+  --color-on-primary: #251D16;
   --color-on-primary-container: #CBB89F;
-  --color-primary-fixed: #2A211A;
-  --color-primary-fixed-dim: #32271F;
+  --color-primary-fixed: #342A20;
+  --color-primary-fixed-dim: #3D3125;
   
   --color-secondary: #D99E6C;
-  --color-secondary-fixed: #2A211A;
-  --color-secondary-container: #32271F;
+  --color-secondary-fixed: #342A20;
+  --color-secondary-container: #3D3125;
   --color-on-secondary-container: #CBB89F;
 
-  --color-background: #1B1512;
-  --color-surface: #221B16;
-  --color-surface-dim: #1B1512;
-  --color-surface-container-lowest: #2A211A;
-  --color-surface-container-low: #2A211A;
-  --color-surface-container: #32271F;
-  --color-surface-container-high: #2A211A;
-  --color-surface-container-highest: #32271F;
-  --color-surface-variant: #3E3127;
+  --color-background: #251D16;
+  --color-surface: #2B2219;
+  --color-surface-dim: #251D16;
+  --color-surface-container-lowest: #342A20;
+  --color-surface-container-low: #342A20;
+  --color-surface-container: #3D3125;
+  --color-surface-container-high: #342A20;
+  --color-surface-container-highest: #3D3125;
+  --color-surface-variant: #493A2C;
   --color-inverse-on-surface: #F3E9D7;
 
   --color-on-surface: #F3E9D7;
   --color-on-surface-variant: #CBB89F;
   --color-outline: #A08A6D;
-  --color-outline-variant: #3E3127;
+  --color-outline-variant: #493A2C;
 
   --color-error: #D07560;
   --color-error-container: #4A2A22;
-  --color-on-error: #1B1512;
+  --color-on-error: #251D16;
   --color-on-error-container: #F2CFC4;
 
-  --color-tertiary: #7A6A54;
-  --color-tertiary-container: #514033;
+  --color-tertiary: #87755C;
+  --color-tertiary-container: #5C4938;
 
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
@@ -163,27 +163,27 @@
     color-scheme: dark;
 
     /* Sfondi */
-    --bg-base: #1B1512;
-    --bg-surface: #221B16;
-    --bg-card: #2A211A;
-    --bg-elevated: #32271F;
-    --bg-overlay: rgba(18, 13, 10, 0.78);
+    --bg-base: #251D16;
+    --bg-surface: #2B2219;
+    --bg-card: #342A20;
+    --bg-elevated: #3D3125;
+    --bg-overlay: rgba(26, 19, 13, 0.78);
 
     /* Bordi e divisori */
-    --border-subtle: #3E3127;
-    --border-strong: #514033;
+    --border-subtle: #493A2C;
+    --border-strong: #5C4938;
 
     /* Testo */
     --text-primary: #F3E9D7;
     --text-secondary: #CBB89F;
     --text-muted: #A08A6D;
-    --text-disabled: #7A6A54;
+    --text-disabled: #8A7860;
 
     /* Accenti */
     --accent: #C68B5C;
     --accent-hover: #D99E6C;
     --accent-active: #A96B3F;
-    --accent-text: #1B1512;
+    --accent-text: #251D16;
     --focus-ring: #D9A05F;
 
     /* Stati */
@@ -194,10 +194,10 @@
 
     /* Extra */
     --shadow: rgba(15, 10, 8, 0.45);
-    --scrollbar-thumb: #4A3A2D;
-    --scrollbar-track: #221B16;
+    --scrollbar-thumb: #54422F;
+    --scrollbar-track: #2B2219;
     --selection-bg: #C68B5C;
-    --selection-text: #1B1512;
+    --selection-text: #251D16;
   }
 
   html {
@@ -206,6 +206,10 @@
 
   body {
     background-color: var(--bg-base);
+    background-image: linear-gradient(rgba(26, 19, 13, 0.35), rgba(26, 19, 13, 0.35)), url('/sfondo-legno.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text-primary);
   }
 

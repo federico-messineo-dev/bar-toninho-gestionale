@@ -14,7 +14,7 @@ const AdminLayout: React.FC = () => {
   }, [authUser, navigate]);
 
   return (
-    <div className="min-h-screen bg-[#1B1512] text-[#F3E9D7] flex flex-col antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-transparent text-[#F3E9D7] flex flex-col antialiased overflow-x-hidden">
       <NavigationSidebar />
 
       <div className="flex-1 flex flex-col lg:ml-[280px]">
