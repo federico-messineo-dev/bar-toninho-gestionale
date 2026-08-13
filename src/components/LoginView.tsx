@@ -16,7 +16,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="bg-[#f5f0e6] min-h-screen flex items-center justify-center p-4 font-body-md text-on-surface antialiased">
+    <div className="bg-[#1B1512] min-h-screen flex items-center justify-center p-4 font-body-md text-on-surface antialiased">
       <main className="w-full max-w-[390px] mx-auto">
         <div className="bg-surface rounded-xl shadow-lg p-6 border border-surface-variant/50 relative overflow-hidden">
           {/* Subtle top accent bar */}
@@ -92,7 +92,7 @@ export const LoginView: React.FC<LoginViewProps> = ({ onLogin }) => {
 
             <button
               type="submit"
-              className="w-full bg-primary-container text-on-primary font-label-md text-label-md py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-primary transition-all duration-200 mt-2 flex justify-center items-center gap-2 cursor-pointer"
+              className="w-full bg-primary-container text-on-primary font-label-md text-label-md py-3 rounded-lg shadow-md hover:shadow-lg hover:bg-primary/90 transition-all duration-200 mt-2 flex justify-center items-center gap-2 cursor-pointer"
             >
               Accedi
               <span className="material-symbols-outlined text-[18px]">

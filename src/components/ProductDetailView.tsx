@@ -121,7 +121,7 @@ const ProductDetailView: React.FC = () => {
         </p>
         <button
           onClick={() => navigate('/prodotti')}
-          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95"
         >
           Vai a Prodotti
         </button>
@@ -141,7 +141,7 @@ const ProductDetailView: React.FC = () => {
         Prodotti
       </button>
 
-      <div className="bg-[#FFFDD0] rounded-3xl soft-shadow border border-[#E5E0D6] overflow-hidden mb-6">
+      <div className="bg-card rounded-3xl soft-shadow border border-outline-variant overflow-hidden mb-6">
         {displayImage ? (
           <div
             className="h-40 md:h-52 bg-surface-variant relative overflow-hidden cursor-pointer group"
@@ -149,14 +149,14 @@ const ProductDetailView: React.FC = () => {
           >
             <img src={displayImage} alt={selectedProduct.name} className="w-full h-full object-cover transition-transform group-hover:scale-105" />
             {!isEditing && (
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">zoom_in</span>
+              <div className="absolute inset-0 bg-[#120D0A]/0 group-hover:bg-[#120D0A]/40 transition-colors flex items-center justify-center">
+                <span className="material-symbols-outlined text-[#F3E9D7] text-3xl opacity-0 group-hover:opacity-100 transition-opacity">zoom_in</span>
               </div>
             )}
             {!isEditing && selectedProduct.image_url && (
               <button
                 onClick={(e) => { e.stopPropagation(); handleRemovePhoto(); }}
-                className="absolute top-2 right-2 w-8 h-8 bg-error/80 hover:bg-error text-white rounded-full flex items-center justify-center cursor-pointer active:scale-90 transition-colors shadow-sm"
+                className="absolute top-2 right-2 w-8 h-8 bg-error/90 hover:bg-error text-on-primary rounded-full flex items-center justify-center cursor-pointer active:scale-90 transition-colors shadow-sm"
                 title="Rimuovi foto"
               >
                 <span className="material-symbols-outlined text-[18px]">delete</span>
@@ -239,7 +239,7 @@ const ProductDetailView: React.FC = () => {
                       <button
                         type="button"
                         onClick={handleRemoveImage}
-                        className="absolute top-1 right-1 w-5 h-5 bg-error text-white rounded-full flex items-center justify-center text-xs cursor-pointer"
+                        className="absolute top-1 right-1 w-5 h-5 bg-error text-on-primary rounded-full flex items-center justify-center text-xs cursor-pointer"
                       >
                         ✕
                       </button>
@@ -340,7 +340,7 @@ const ProductDetailView: React.FC = () => {
               <div className="flex justify-end mt-6">
                 <button
                   onClick={handleSaveEdits}
-                  className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+                  className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95"
                 >
                   Salva Modifiche
                 </button>
@@ -385,21 +385,21 @@ const ProductDetailView: React.FC = () => {
               <div className="flex gap-3 pt-4 border-t border-outline-variant/30">
                 <button
                   onClick={() => restockProduct(selectedProduct.id)}
-                  className="flex-1 py-3.5 bg-[#3d6b4f] text-white rounded-full hover:bg-[#2f543f] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm cursor-pointer active:scale-[0.97]"
+                  className="flex-1 py-3.5 bg-success text-on-primary rounded-full hover:bg-success/90 transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm cursor-pointer active:scale-[0.97]"
                 >
                   <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span> Rifornisci (+1)
                 </button>
                 <button
                   onClick={() => sellProduct(selectedProduct.id)}
                   disabled={selectedProduct.stock <= 0}
-                  className="flex-1 py-3.5 bg-[#ba1a1a] text-white rounded-full hover:bg-[#941515] transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm disabled:opacity-50 cursor-pointer active:scale-[0.97]"
+                  className="flex-1 py-3.5 bg-error text-on-primary rounded-full hover:bg-error/90 transition-colors font-label-md flex justify-center items-center gap-2 shadow-sm disabled:opacity-50 cursor-pointer active:scale-[0.97]"
                 >
                   <span className="material-symbols-outlined text-[18px]">remove_shopping_cart</span> Vendi (-1)
                 </button>
               </div>
               <button
                 onClick={() => setShowDeleteConfirm(true)}
-                className="w-full py-3 mt-2 bg-surface-container-lowest text-on-error rounded-full hover:bg-error-container transition-colors font-label-md flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
+                className="w-full py-3 mt-2 bg-surface-container-lowest text-error rounded-full hover:text-on-error-container hover:bg-error-container transition-colors font-label-md flex justify-center items-center gap-2 border border-outline-variant/40 cursor-pointer active:scale-[0.98]"
               >
                 <span className="material-symbols-outlined text-[18px]">delete</span> Elimina Prodotto
               </button>
@@ -409,21 +409,21 @@ const ProductDetailView: React.FC = () => {
       )}
 
       {activeTab === 'Movimenti' && (
-        <div className="bg-[#FFFDD0] rounded-3xl p-5 border border-[#E5E0D6] text-center text-outline font-body-md shadow-sm">
+        <div className="bg-card rounded-3xl p-5 border border-outline-variant text-center text-outline font-body-md shadow-sm">
           Cronologia movimenti (placeholder per la registrazione).
         </div>
       )}
 
       {activeTab === 'QR Code' && (
-        <div className="bg-[#FFFDD0] rounded-3xl p-6 border border-[#E5E0D6] text-center shadow-sm">
+        <div className="bg-card rounded-3xl p-6 border border-outline-variant text-center shadow-sm">
           <h3 className="font-headline-md text-headline-md text-primary mb-4">QR Menu Pubblico</h3>
           <p className="font-body-md text-outline mb-6">Mostra questo codice al cliente per il menu.</p>
-          <div className="bg-white p-4 rounded-3xl inline-block shadow-inner">
+          <div className="bg-card p-4 rounded-3xl inline-block shadow-inner">
             <QRCodeSVG
               value={typeof window !== 'undefined' ? window.location.origin + '/menu' : ''}
               size={192}
-              bgColor="#ffffff"
-              fgColor="#722F37"
+              bgColor="#F3E9D7"
+              fgColor="#1B1512"
               level="M"
               includeMargin={false}
               className="w-48 h-48"
@@ -432,7 +432,7 @@ const ProductDetailView: React.FC = () => {
           <div className="mt-6">
             <button
               onClick={() => window.open('/menu', '_blank')}
-              className="bg-primary-container text-on-primary font-label-md px-6 py-2.5 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+              className="bg-primary-container text-on-primary font-label-md px-6 py-2.5 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95"
             >
               Apri Menu in una Nuova Scheda
             </button>
@@ -442,12 +442,12 @@ const ProductDetailView: React.FC = () => {
 
       {showFullscreen && displayImage && (
         <div
-          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          className="fixed inset-0 z-[60] bg-[#120D0A]/92 flex items-center justify-center p-4 cursor-pointer"
           onClick={() => setShowFullscreen(false)}
         >
           <button
             onClick={() => setShowFullscreen(false)}
-            className="absolute top-4 right-4 w-10 h-10 bg-white/20 hover:bg-white/40 text-white rounded-full flex items-center justify-center cursor-pointer z-10 transition-colors"
+            className="absolute top-4 right-4 w-10 h-10 bg-[#F3E9D7]/15 hover:bg-[#F3E9D7]/25 text-[#F3E9D7] rounded-full flex items-center justify-center cursor-pointer z-10 transition-colors"
           >
             <span className="material-symbols-outlined">close</span>
           </button>
@@ -462,11 +462,11 @@ const ProductDetailView: React.FC = () => {
 
       {showDeleteConfirm && (
         <div
-          className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-[#120D0A]/70 flex items-center justify-center p-4 z-50"
           onClick={() => setShowDeleteConfirm(false)}
         >
           <div
-            className="bg-[#FFFDD0] rounded-3xl p-6 w-full max-w-md border border-[#E5E0D6] shadow-xl animate-[scaleIn_0.2s_ease]"
+            className="bg-card rounded-3xl p-6 w-full max-w-md border border-outline-variant shadow-xl animate-[scaleIn_0.2s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Conferma Eliminazione</h3>

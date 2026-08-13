@@ -49,12 +49,12 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cerca prodotto..."
-              className="w-full bg-surface-container-lowest border-b border-on-surface-variant py-2 pl-10 pr-4 rounded-t-lg focus:outline-none focus:border-b-2 focus:border-[#C49A3F] transition-colors font-body-md placeholder:text-outline-variant"
+              className="w-full bg-surface-container-lowest border-b border-on-surface-variant py-2 pl-10 pr-4 rounded-t-lg focus:outline-none focus:border-b-2 focus:border-focus transition-colors font-body-md placeholder:text-outline-variant"
             />
           </div>
           <button
             onClick={() => alert('Scanner fotocamera avviato')}
-            className="w-10 h-10 bg-primary-container text-on-primary rounded-lg flex items-center justify-center hover:bg-primary transition-colors shadow-[0_4px_12px_rgba(114,47,55,0.08)] cursor-pointer"
+            className="w-10 h-10 bg-primary-container text-on-primary rounded-lg flex items-center justify-center hover:bg-primary/90 transition-colors shadow-[0_4px_12px_rgba(15,10,8,0.4)] cursor-pointer"
             title="Scansiona Barcode"
           >
             <span className="material-symbols-outlined">photo_camera</span>
@@ -73,7 +73,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 onClick={() => setSelectedCategory(cat)}
                 className={`px-4 py-1.5 rounded-full font-label-md text-label-md transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-primary-container text-on-primary shadow-[0_2px_8px_rgba(114,47,55,0.08)] font-semibold'
+                    ? 'bg-primary-container text-on-primary shadow-[0_2px_8px_rgba(15,10,8,0.4)] font-semibold'
                     : 'border border-outline-variant text-on-surface-variant hover:bg-surface-variant'
                 }`}
               >
@@ -98,16 +98,16 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
             {filteredProducts.map((product) => {
               const dotColor =
                 product.statusDot === 'low' || product.stock <= 2
-                  ? 'bg-[#ba1a1a]'
+                  ? 'bg-error'
                   : product.statusDot === 'out' || product.stock === 0
-                  ? 'bg-[#494441]'
-                  : 'bg-[#4a7c59]';
+                  ? 'bg-tertiary'
+                  : 'bg-success';
 
               return (
                 <div
                   key={product.id}
                   onClick={() => onSelectProduct(product)}
-                  className="product-card bg-[#FFFDD0] rounded-lg border border-[#E5E0D6] overflow-hidden flex flex-col relative cursor-pointer hover:border-[#C49A3F] transition-all hover-lift"
+                  className="product-card bg-card rounded-lg border border-outline-variant overflow-hidden flex flex-col relative cursor-pointer hover:border-primary transition-all hover-lift"
                 >
                   <div className="h-32 md:h-40 bg-surface-variant relative overflow-hidden">
                     <img
@@ -117,7 +117,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     />
                     {/* Stock Status Dot */}
                     <div
-                      className={`absolute top-2 right-2 w-3.5 h-3.5 rounded-full ${dotColor} border-2 border-[#FFFDD0] shadow-sm`}
+                      className={`absolute top-2 right-2 w-3.5 h-3.5 rounded-full ${dotColor} border-2 border-card shadow-sm`}
                       title={`Scorta: ${product.stock}`}
                     ></div>
                   </div>
@@ -129,7 +129,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                     <h3 className="font-headline-md text-[16px] leading-tight text-primary mb-2 flex-1 line-clamp-2">
                       {product.name}
                     </h3>
-                    <div className="font-label-md text-label-md text-primary-container font-bold">
+                    <div className="font-label-md text-label-md text-primary font-bold">
                       €{product.price.toFixed(2)}
                     </div>
                   </div>
@@ -143,7 +143,7 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
       {/* Floating Action Button */}
       <button
         onClick={onAddProduct}
-        className="fixed bottom-20 md:bottom-8 right-6 w-14 h-14 bg-primary-container text-on-primary rounded-full shadow-[0_4px_12px_rgba(114,47,55,0.3)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-50 cursor-pointer hover:bg-primary"
+        className="fixed bottom-20 md:bottom-8 right-6 w-14 h-14 bg-primary-container text-on-primary rounded-full shadow-[0_4px_12px_rgba(15,10,8,0.45)] flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-50 cursor-pointer hover:bg-primary/90"
         title="Aggiungi Prodotto"
       >
         <span className="material-symbols-outlined text-[28px]">add</span>

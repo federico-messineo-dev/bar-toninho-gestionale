@@ -24,7 +24,7 @@ const UsersPage: React.FC = () => {
         <h2 className="font-headline-lg text-headline-lg text-on-surface">Gestione Utenti</h2>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-primary-container text-on-primary font-label-md px-4 py-2 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95"
+          className="bg-primary-container text-on-primary font-label-md px-4 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95"
         >
           + Aggiungi
         </button>
@@ -34,7 +34,7 @@ const UsersPage: React.FC = () => {
         {users.map((user) => (
           <div
             key={user.email}
-            className="bg-[#FFFDD0] rounded-3xl p-4 border border-[#E5E0D6] flex justify-between items-center shadow-sm hover:shadow-md transition-shadow"
+            className="bg-card rounded-3xl p-4 border border-outline-variant flex justify-between items-center shadow-sm hover:shadow-md transition-shadow"
           >
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-primary-container text-on-primary rounded-full flex items-center justify-center font-label-md">
@@ -46,7 +46,7 @@ const UsersPage: React.FC = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <span className="font-label-sm text-label-sm bg-primary-container/20 text-primary-container px-2.5 py-1 rounded-full capitalize">{user.role}</span>
+              <span className="font-label-sm text-label-sm bg-primary/20 text-primary px-2.5 py-1 rounded-full capitalize">{user.role}</span>
               {user.email !== 'gaia.bilardi25@gmail.com' && authUser?.role === 'admin' && (
                 <button
                   onClick={() => removeUser(user.email)}
@@ -62,11 +62,11 @@ const UsersPage: React.FC = () => {
 
       {showModal && (
         <div
-          className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-[#120D0A]/70 flex items-center justify-center p-4 z-50"
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-[#FFFDD0] rounded-3xl p-6 w-full max-w-md border border-[#E5E0D6] shadow-xl animate-[scaleIn_0.2s_ease]"
+            className="bg-card rounded-3xl p-6 w-full max-w-md border border-outline-variant shadow-xl animate-[scaleIn_0.2s_ease]"
             onClick={(e) => e.stopPropagation()}
           >
             <h3 className="font-headline-md text-headline-md text-on-surface mb-4">Nuovo Utente</h3>
@@ -107,7 +107,7 @@ const UsersPage: React.FC = () => {
               </button>
               <button
                 onClick={handleAddUser}
-                className="px-4 py-2 rounded-full bg-primary-container text-on-primary hover:bg-primary transition-colors font-label-md cursor-pointer active:scale-95"
+                className="px-4 py-2 rounded-full bg-primary-container text-on-primary hover:bg-primary/90 transition-colors font-label-md cursor-pointer active:scale-95"
               >
                 Salva
               </button>

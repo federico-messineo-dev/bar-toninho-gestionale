@@ -24,7 +24,7 @@ const NavigationSidebar: React.FC = () => {
   }, [navigate]);
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 h-screen bg-[#FFFDD0] border-r border-[#E5E0D6] p-6 fixed left-0 top-0 z-30">
+    <aside className="hidden lg:flex flex-col w-64 h-screen bg-card border-r border-outline-variant p-6 fixed left-0 top-0 z-30">
       <div className="flex flex-col items-center mb-10">
         <img src="/toninho-logo.png" alt="Caffè Toninho" className="h-14 w-auto mb-1" />
         <p className="font-body-sm text-outline text-[11px]">Gestione Magazzino</p>
@@ -55,7 +55,7 @@ const NavigationSidebar: React.FC = () => {
 
       <button
         onClick={() => { logout(); navigate('/login', { replace: true }); }}
-        className="flex items-center gap-3 px-4 py-3 rounded-3xl font-body-md text-outline hover:text-on-error hover:bg-error-container/50 transition-colors mt-auto cursor-pointer active:scale-[0.97]"
+        className="flex items-center gap-3 px-4 py-3 rounded-3xl font-body-md text-outline hover:text-on-error-container hover:bg-error-container/50 transition-colors mt-auto cursor-pointer active:scale-[0.97]"
       >
         <span className="material-symbols-outlined text-[20px]">logout</span>
         Esci

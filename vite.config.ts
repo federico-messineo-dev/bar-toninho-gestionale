@@ -16,8 +16,8 @@ export default defineConfig(() => {
           name: 'Caffè Toninho - Gestione Inventario',
           short_name: 'Caffè Toninho',
           description: 'Gestione inventario, menu e ordini del Caffè Toninho',
-          theme_color: '#722F37',
-          background_color: '#F5F0E6',
+          theme_color: '#1B1512',
+          background_color: '#1B1512',
           display: 'standalone',
           start_url: '/',
           icons: [

@@ -69,11 +69,11 @@ export const MenuQRView: React.FC<MenuQRViewProps> = ({
       </div>
 
       {/* QR Code & Quick Actions Section */}
-      <section className="bg-[#FFFDD0] rounded-xl p-6 soft-shadow flex flex-col items-center gap-6 border border-[#E5E0D6] mb-6">
+      <section className="bg-card rounded-xl p-6 soft-shadow flex flex-col items-center gap-6 border border-outline-variant mb-6">
         <h2 className="font-headline-md text-headline-md text-primary text-center">
           Il tuo Menu QR - Caffè Toninho
         </h2>
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-outline-variant">
+        <div className="bg-card p-4 rounded-lg shadow-sm border border-outline-variant">
           <img
             src={QR_CODE_URL}
             alt="Caffè Toninho Menu QR Code"
@@ -92,7 +92,7 @@ export const MenuQRView: React.FC<MenuQRViewProps> = ({
           </button>
           <button
             onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors cursor-pointer shadow-sm"
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary/90 transition-colors cursor-pointer shadow-sm"
           >
             <span className="material-symbols-outlined text-sm">download</span>
             Scarica QR
@@ -128,7 +128,7 @@ export const MenuQRView: React.FC<MenuQRViewProps> = ({
           return (
             <div
               key={product.id}
-              className={`bg-[#FFFDD0] rounded-lg p-4 flex justify-between items-center soft-shadow transition-all border border-[#E5E0D6] ${
+              className={`bg-card rounded-lg p-4 flex justify-between items-center soft-shadow transition-all border border-outline-variant ${
                 !product.visibleOnMenu ? 'opacity-60' : ''
               }`}
             >
@@ -141,7 +141,7 @@ export const MenuQRView: React.FC<MenuQRViewProps> = ({
                     {product.format} • {product.stock} in stock
                   </span>
                   {isOut && (
-                    <span className="px-2 py-0.5 rounded-full bg-[#494441] text-white font-label-sm text-[10px]">
+                    <span className="px-2 py-0.5 rounded-full bg-tertiary-container text-[#F3E9D7] font-label-sm text-[10px]">
                       Esaurito
                     </span>
                   )}
@@ -159,7 +159,7 @@ export const MenuQRView: React.FC<MenuQRViewProps> = ({
                 }`}
               >
                 <span
-                  className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  className={`pointer-events-none inline-block h-6 w-6 transform rounded-full bg-on-surface shadow ring-0 transition duration-200 ease-in-out ${
                     product.visibleOnMenu ? 'translate-x-6' : 'translate-x-0'
                   }`}
                 />

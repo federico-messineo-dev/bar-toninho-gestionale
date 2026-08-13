@@ -10,9 +10,9 @@ interface LogEntry {
 let _id = 0;
 
 const LEVEL_COLORS: Record<string, { bg: string; text: string }> = {
-  log: { bg: 'rgba(255,255,255,0.08)', text: '#ccc' },
-  warn: { bg: 'rgba(255,200,0,0.12)', text: '#f5c842' },
-  error: { bg: 'rgba(255,50,50,0.12)', text: '#ff6b6b' },
+  log: { bg: 'rgba(243,233,215,0.08)', text: '#CBB89F' },
+  warn: { bg: 'rgba(217,164,65,0.14)', text: '#E0AE4A' },
+  error: { bg: 'rgba(208,117,96,0.15)', text: '#E08770' },
 };
 
 const LEVEL_LABELS: Record<string, string> = {
@@ -83,20 +83,20 @@ export default function DebugOverlay() {
       className="fixed bottom-0 left-0 right-0 pointer-events-auto"
       style={{ maxHeight: '200px', zIndex: 9999 }}
     >
-      <div className="flex items-center justify-between px-3 py-1 bg-black/80 border-t border-white/10">
-        <span className="text-[10px] font-mono text-white/50">
+      <div className="flex items-center justify-between px-3 py-1 bg-[#120D0A]/85 border-t border-[#F3E9D7]/10">
+        <span className="text-[10px] font-mono text-[#F3E9D7]/50">
           Debug ({logs.length})
         </span>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setLogs([])}
-            className="text-[10px] font-mono text-white/40 hover:text-white/80 cursor-pointer"
+            className="text-[10px] font-mono text-[#F3E9D7]/40 hover:text-[#F3E9D7]/80 cursor-pointer"
           >
             Clear
           </button>
           <button
             onClick={() => setVisible(false)}
-            className="text-[10px] font-mono text-white/40 hover:text-white/80 cursor-pointer px-1"
+            className="text-[10px] font-mono text-[#F3E9D7]/40 hover:text-[#F3E9D7]/80 cursor-pointer px-1"
           >
             ✕
           </button>
@@ -104,7 +104,7 @@ export default function DebugOverlay() {
       </div>
       <div
         ref={scrollRef}
-        className="overflow-y-auto bg-black/75 backdrop-blur-sm border-t border-white/5"
+        className="overflow-y-auto bg-[#120D0A]/80 backdrop-blur-sm border-t border-[#F3E9D7]/5"
         style={{ maxHeight: '170px', WebkitOverflowScrolling: 'touch' }}
       >
         {logs.map((entry) => {
@@ -112,17 +112,17 @@ export default function DebugOverlay() {
           return (
             <div
               key={entry.id}
-              className="px-3 py-0.5 border-b border-white/5 font-mono text-[11px] leading-tight flex gap-2"
+              className="px-3 py-0.5 border-b border-[#F3E9D7]/5 font-mono text-[11px] leading-tight flex gap-2"
               style={{ backgroundColor: colors.bg }}
             >
-              <span className="text-white/30 shrink-0 w-[70px]">{entry.timestamp}</span>
+              <span className="text-[#F3E9D7]/30 shrink-0 w-[70px]">{entry.timestamp}</span>
               <span
                 className="shrink-0 w-[32px] font-bold"
                 style={{ color: colors.text }}
               >
                 {LEVEL_LABELS[entry.level]}
               </span>
-              <span className="text-white/80 break-all whitespace-pre-wrap">{entry.message}</span>
+              <span className="text-[#F3E9D7]/80 break-all whitespace-pre-wrap">{entry.message}</span>
             </div>
           );
         })}

@@ -36,7 +36,7 @@ const ScrollArrows: React.FC<ScrollArrowsProps> = ({ children, className = '' })
           onClick={scrollLeft}
           className="absolute left-0 top-0 bottom-0 w-10 flex items-center justify-center z-10 cursor-pointer scroll-arrow-btn"
         >
-          <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
+          <span className="material-symbols-outlined text-on-surface/80 text-[28px] bg-card/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
             chevron_left
           </span>
         </button>
@@ -46,7 +46,7 @@ const ScrollArrows: React.FC<ScrollArrowsProps> = ({ children, className = '' })
           onClick={scrollRight}
           className="absolute right-0 top-0 bottom-0 w-10 flex items-center justify-center z-10 cursor-pointer scroll-arrow-btn"
         >
-          <span className="material-symbols-outlined text-on-surface/60 text-[28px] bg-white/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
+          <span className="material-symbols-outlined text-on-surface/80 text-[28px] bg-card/90 rounded-full w-9 h-9 flex items-center justify-center shadow-md border border-outline-variant/30">
             chevron_right
           </span>
         </button>

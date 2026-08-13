@@ -27,7 +27,7 @@ const DashboardPage: React.FC = () => {
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/prodotti')} className="bg-card p-6 rounded-3xl soft-shadow border border-outline-variant flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Prodotti Totali</span>
@@ -37,7 +37,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <button onClick={() => navigate('/prodotti')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between relative overflow-hidden cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/prodotti')} className="bg-card p-6 rounded-3xl soft-shadow border border-outline-variant flex flex-col justify-between relative overflow-hidden cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full relative z-10">
             <div className="absolute top-0 right-0 w-16 h-16 bg-error-container rounded-bl-full -z-0 opacity-50" />
             <div className="flex justify-between items-start mb-4 relative z-10">
@@ -50,7 +50,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <button onClick={() => navigate('/qr-menu')} className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
+        <button onClick={() => navigate('/qr-menu')} className="bg-card p-6 rounded-3xl soft-shadow border border-outline-variant flex flex-col justify-between cursor-pointer hover:-translate-y-1 hover:shadow-lg transition-all duration-200 active:scale-[0.97] text-left">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Menu QR Attivi</span>
@@ -60,7 +60,7 @@ const DashboardPage: React.FC = () => {
           </div>
         </button>
 
-        <div className="bg-[#FFFDD0] p-6 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col justify-between cursor-default">
+        <div className="bg-card p-6 rounded-3xl soft-shadow border border-outline-variant flex flex-col justify-between cursor-default">
           <div className="flex flex-col h-full">
             <div className="flex justify-between items-start mb-4">
               <span className="font-label-md text-label-md text-outline">Vendite Oggi</span>
@@ -93,7 +93,7 @@ const DashboardPage: React.FC = () => {
           {low.map((item) => (
           <div
             key={item.id}
-            className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-3xl soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
+            className="min-w-[280px] w-[280px] flex-shrink-0 bg-card rounded-3xl soft-shadow p-4 border border-outline-variant flex flex-col snap-start cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
           >
             <div
               onClick={() => { selectProduct(item.id); navigate(`/prodotti/${item.id}`); }}
@@ -117,7 +117,7 @@ const DashboardPage: React.FC = () => {
 
             <button
               onClick={() => restockProduct(item.id)}
-              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-full hover:bg-primary transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-95"
+              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-full hover:bg-primary/90 transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-95"
             >
               <span className="material-symbols-outlined text-[18px]">add_shopping_cart</span>
               Rifornisci
@@ -128,7 +128,7 @@ const DashboardPage: React.FC = () => {
       </ScrollArrows>
 
       {showResetConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#120D0A]/60 p-4">
           <div className="bg-surface rounded-3xl p-6 max-w-sm w-full soft-shadow border border-outline-variant animate-[fadeIn_0.15s_ease]">
             <h3 className="font-headline-md text-headline-md text-on-surface mb-2">Azzerare vendite di oggi?</h3>
             <p className="font-body-md text-body-md text-outline mb-6">

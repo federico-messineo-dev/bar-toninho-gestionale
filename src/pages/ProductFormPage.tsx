@@ -1,24 +1,31 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAppStore from '../store/useAppStore';
 import { convertToWebp } from '../utils/imageUtils';
 
-const CATEGORIES = [
+const FALLBACK_CATEGORIES = [
   'Spumante', 'Champagne', 'Vino', 'Birra', 'Amari',
   'Liquori', 'Vermouth', 'Grappa', 'Whisky', 'Bourbon', 'Rum',
-  'Tequila', 'Vodka', 'Armagnac',
+  'Tequila', 'Vodka', 'Armagnac', 'Gin',
 ];
 
 const ProductFormPage: React.FC = () => {
   const navigate = useNavigate();
   const addProduct = useAppStore((s) => s.addProduct);
   const authUser = useAppStore((s) => s.authUser);
+  const products = useAppStore((s) => s.products);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(products.map((p) => p.category).filter(Boolean))) as string[];
+    cats.sort((a, b) => a.localeCompare(b));
+    return cats.length ? cats : FALLBACK_CATEGORIES;
+  }, [products]);
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
   const [pricePurchase, setPricePurchase] = useState('');
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [category, setCategory] = useState(categories[0] || FALLBACK_CATEGORIES[0]);
   const [format, setFormat] = useState('');
   const [description, setDescription] = useState('');
   const [supplier, setSupplier] = useState('');
@@ -119,7 +126,7 @@ const ProductFormPage: React.FC = () => {
             {imagePreview ? (
               <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-outline-variant shrink-0">
                 <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
-                <button type="button" onClick={handleRemoveImage} className="absolute top-1 right-1 w-5 h-5 bg-error text-white rounded-full flex items-center justify-center text-xs cursor-pointer">✕</button>
+                <button type="button" onClick={handleRemoveImage} className="absolute top-1 right-1 w-5 h-5 bg-error text-on-primary rounded-full flex items-center justify-center text-xs cursor-pointer">✕</button>
               </div>
             ) : (
               <div className="w-24 h-24 rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center text-outline shrink-0">
@@ -157,7 +164,7 @@ const ProductFormPage: React.FC = () => {
           <div>
             <label className="font-label-md text-label-md text-outline block mb-1">Categoria</label>
             <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
-              {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
+              {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
           <div>
@@ -200,7 +207,7 @@ const ProductFormPage: React.FC = () => {
         <div className="flex items-center gap-3">
           <label className="font-label-md text-outline">Visibile nel Menu</label>
           <button type="button" onClick={() => setActive(!active)} className={`relative w-12 h-7 rounded-full transition-colors cursor-pointer ${active ? 'bg-primary' : 'bg-outline-variant'}`}>
-            <span className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow-sm transition-transform ${active ? 'translate-x-5' : ''}`} />
+            <span className={`absolute top-0.5 left-0.5 w-6 h-6 bg-on-surface rounded-full shadow-sm transition-transform ${active ? 'translate-x-5' : ''}`} />
           </button>
         </div>
 
@@ -208,7 +215,7 @@ const ProductFormPage: React.FC = () => {
           <button type="button" onClick={() => navigate('/prodotti')} className="px-5 py-3 rounded-full bg-surface-container-lowest text-on-surface hover:bg-surface-variant transition-colors font-label-md border border-outline-variant cursor-pointer active:scale-95">
             Annulla
           </button>
-          <button type="submit" disabled={saving} className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 disabled:opacity-70">
+          <button type="submit" disabled={saving} className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95 disabled:opacity-70">
             {saving ? (
               <span className="flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] animate-spin">autorenew</span>

@@ -28,7 +28,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* Bento Grid Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
         {/* Card 1 */}
-        <div className="bg-[#FFFDD0] p-6 rounded-lg soft-shadow hover-lift transition-all border border-[#E5E0D6] flex flex-col justify-between">
+        <div className="bg-card p-6 rounded-lg soft-shadow hover-lift transition-all border border-outline-variant flex flex-col justify-between">
           <div className="flex justify-between items-start mb-4">
             <span className="font-label-md text-label-md text-outline">
               Prodotti Totali
@@ -43,7 +43,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Card 2 */}
-        <div className="bg-[#FFFDD0] p-6 rounded-lg soft-shadow hover-lift transition-all border border-[#E5E0D6] flex flex-col justify-between relative overflow-hidden">
+        <div className="bg-card p-6 rounded-lg soft-shadow hover-lift transition-all border border-outline-variant flex flex-col justify-between relative overflow-hidden">
           <div className="absolute top-0 right-0 w-16 h-16 bg-error-container rounded-bl-full -z-0 opacity-50"></div>
           <div className="flex justify-between items-start mb-4 relative z-10">
             <span className="font-label-md text-label-md text-outline">
@@ -59,7 +59,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Card 3 */}
-        <div className="bg-[#FFFDD0] p-6 rounded-lg soft-shadow hover-lift transition-all border border-[#E5E0D6] flex flex-col justify-between">
+        <div className="bg-card p-6 rounded-lg soft-shadow hover-lift transition-all border border-outline-variant flex flex-col justify-between">
           <div className="flex justify-between items-start mb-4">
             <span className="font-label-md text-label-md text-outline">
               Menu QR Attivi
@@ -74,7 +74,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         </div>
 
         {/* Card 4 */}
-        <div className="bg-[#FFFDD0] p-6 rounded-lg soft-shadow hover-lift transition-all border border-[#E5E0D6] flex flex-col justify-between">
+        <div className="bg-card p-6 rounded-lg soft-shadow hover-lift transition-all border border-outline-variant flex flex-col justify-between">
           <div className="flex justify-between items-start mb-4">
             <span className="font-label-md text-label-md text-outline">
               Vendite Oggi
@@ -108,7 +108,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           {lowStockItems.map((item) => (
           <div
             key={item.id}
-            className="min-w-[280px] w-[280px] flex-shrink-0 bg-[#FFFDD0] rounded-lg soft-shadow p-4 border border-[#E5E0D6] flex flex-col snap-start hover-lift transition-all"
+            className="min-w-[280px] w-[280px] flex-shrink-0 bg-card rounded-lg soft-shadow p-4 border border-outline-variant flex flex-col snap-start hover-lift transition-all"
           >
             <div
               onClick={() => onSelectProduct(item)}
@@ -136,7 +136,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
             <button
               onClick={() => onRestock(item.id)}
-              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-md hover:bg-primary transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-[0.98]"
+              className="mt-auto w-full bg-primary-container text-on-primary font-label-md py-2.5 rounded-md hover:bg-primary/90 transition-colors soft-shadow flex justify-center items-center gap-2 cursor-pointer active:scale-[0.98]"
             >
               <span className="material-symbols-outlined text-[18px]">
                 add_shopping_cart

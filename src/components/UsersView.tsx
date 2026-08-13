@@ -81,7 +81,7 @@ export const UsersView: React.FC<UsersViewProps> = ({
         {users.map((user) => (
           <div
             key={user.id}
-            className={`bg-[#FFFDD0] rounded-xl p-4 md:p-6 border border-[#E5E0D6] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover-lift ${
+            className={`bg-card rounded-xl p-4 md:p-6 border border-outline-variant flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover-lift ${
               user.status === 'offline' ? 'opacity-85' : ''
             }`}
           >
@@ -98,7 +98,7 @@ export const UsersView: React.FC<UsersViewProps> = ({
                 />
               </div>
               <div>
-                <h3 className="font-headline-md text-headline-md text-primary-container font-semibold leading-tight">
+                <h3 className="font-headline-md text-headline-md text-primary font-semibold leading-tight">
                   {user.name}
                 </h3>
                 <div className="flex items-center space-x-2 mt-1">
@@ -113,8 +113,8 @@ export const UsersView: React.FC<UsersViewProps> = ({
                   </span>
 
                   {user.status === 'online' && (
-                    <span className="flex items-center space-x-1 font-label-sm text-label-sm text-[#4CAF50]">
-                      <span className="w-2 h-2 rounded-full bg-[#4CAF50] inline-block"></span>
+                    <span className="flex items-center space-x-1 font-label-sm text-label-sm text-success">
+                      <span className="w-2 h-2 rounded-full bg-success inline-block"></span>
                       <span>Online</span>
                     </span>
                   )}
@@ -153,8 +153,8 @@ export const UsersView: React.FC<UsersViewProps> = ({
 
       {/* Modal for Adding / Editing Users */}
       {(showAddModal || editingUser) && (
-        <div className="fixed inset-0 bg-tertiary/40 backdrop-blur-xs z-50 flex items-center justify-center p-4">
-          <div className="bg-[#FFFDD0] rounded-xl p-6 border border-[#E5E0D6] shadow-xl w-full max-w-md relative">
+        <div className="fixed inset-0 bg-[#120D0A]/65 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+          <div className="bg-card rounded-xl p-6 border border-outline-variant shadow-xl w-full max-w-md relative">
             <h3 className="font-headline-md text-headline-md text-primary font-bold mb-4">
               {editingUser ? 'Modifica Utente' : 'Aggiungi Nuovo Utente'}
             </h3>
@@ -203,7 +203,7 @@ export const UsersView: React.FC<UsersViewProps> = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 bg-primary text-white rounded font-label-md text-label-md hover:bg-primary-container shadow-sm cursor-pointer"
+                  className="px-6 py-2 bg-primary text-on-primary rounded font-label-md text-label-md hover:bg-primary/90 shadow-sm cursor-pointer"
                 >
                   Salva
                 </button>

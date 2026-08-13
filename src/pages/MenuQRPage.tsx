@@ -13,13 +13,13 @@ const MenuQRPage: React.FC = () => {
         Menu QR Pubblico
       </h2>
 
-      <div className="bg-[#FFFDD0] p-6 md:p-8 rounded-3xl soft-shadow border border-[#E5E0D6] flex flex-col items-center justify-center text-center">
-        <div className="bg-white p-5 rounded-3xl inline-block shadow-md mb-4">
+      <div className="bg-card p-6 md:p-8 rounded-3xl soft-shadow border border-outline-variant flex flex-col items-center justify-center text-center">
+        <div className="bg-card p-5 rounded-3xl inline-block shadow-md mb-4">
           <QRCodeSVG
             value={menuUrl}
             size={192}
-            bgColor="#ffffff"
-            fgColor="#722F37"
+            bgColor="#F3E9D7"
+            fgColor="#1B1512"
             level="M"
             includeMargin={false}
             className="w-48 h-48 md:w-56 md:h-56"
@@ -30,7 +30,7 @@ const MenuQRPage: React.FC = () => {
 
         <button
           onClick={() => window.open('/menu', '_blank')}
-          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary transition-colors shadow-sm cursor-pointer active:scale-95 mb-6"
+          className="bg-primary-container text-on-primary font-label-lg px-6 py-3 rounded-full hover:bg-primary/90 transition-colors shadow-sm cursor-pointer active:scale-95 mb-6"
         >
           Apri Menu Anteprima
         </button>
@@ -52,7 +52,7 @@ const MenuQRPage: React.FC = () => {
             {products.map((item) => (
               <div
                 key={item.id}
-                className="flex justify-between items-center py-2 px-3 bg-[#FFFDD0] rounded-full border border-[#E5E0D6]/50 hover:bg-primary-container/30 transition-colors"
+                className="flex justify-between items-center py-2 px-3 bg-card rounded-full border border-outline-variant/50 hover:bg-primary/30 transition-colors"
               >
                 <span className="font-body-md text-on-surface truncate pr-4">{item.name}</span>
                 <span className="font-label-md text-outline shrink-0">Scorta: {item.stock}</span>

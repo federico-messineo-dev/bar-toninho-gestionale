@@ -13,7 +13,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onLogout }) => {
       </h2>
 
       {/* User Card */}
-      <div className="bg-[#FFFDD0] rounded-xl p-6 border border-[#E5E0D6] soft-shadow mb-6 flex flex-col md:flex-row items-center gap-6">
+      <div className="bg-card rounded-xl p-6 border border-outline-variant soft-shadow mb-6 flex flex-col md:flex-row items-center gap-6">
         <img
           src={ADMIN_AVATAR}
           alt="Admin Avatar"
@@ -33,7 +33,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onLogout }) => {
       </div>
 
       {/* Store Info Card */}
-      <div className="bg-[#FFFDD0] rounded-xl p-6 border border-[#E5E0D6] soft-shadow space-y-4">
+      <div className="bg-card rounded-xl p-6 border border-outline-variant soft-shadow space-y-4">
         <div className="flex items-center gap-4 pb-4 border-b border-outline-variant">
           <img
             src={BRAND_LOGO_URL}
@@ -88,7 +88,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({ onLogout }) => {
         <div className="pt-4 border-t border-outline-variant flex justify-end">
           <button
             onClick={onLogout}
-            className="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm cursor-pointer flex items-center gap-2"
+            className="px-6 py-2.5 bg-primary text-on-primary rounded-lg font-label-md text-label-md hover:bg-primary/90 transition-colors shadow-sm cursor-pointer flex items-center gap-2"
           >
             <span className="material-symbols-outlined text-sm">logout</span>
             Disconnetti da Caffè Toninho

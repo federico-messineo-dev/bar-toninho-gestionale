@@ -4,12 +4,6 @@ import useAppStore from '../store/useAppStore';
 import ScrollArrows from '../components/ScrollArrows';
 import type { ProductDoc } from '../db/dexie';
 
-const CATEGORIES = [
-  'Tutti', 'Spumante', 'Champagne', 'Vino', 'Birra', 'Amari',
-  'Liquori', 'Vermouth', 'Grappa', 'Whisky', 'Bourbon', 'Rum',
-  'Tequila', 'Vodka', 'Armagnac',
-];
-
 const STOCK_FILTERS = [
   { key: 'all' as const, label: 'Tutti', icon: 'inventory_2' },
   { key: 'low' as const, label: 'In esaurimento', icon: 'warning' },
@@ -26,6 +20,13 @@ const ProductsPage: React.FC = () => {
   const setSelectedCategory = useAppStore((s) => s.setSelectedCategory);
   const filteredProducts = useAppStore((s) => s.filteredProducts);
   const selectProduct = useAppStore((s) => s.selectProduct);
+  const allProducts = useAppStore((s) => s.products);
+
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(allProducts.map((p) => p.category).filter(Boolean))) as string[];
+    cats.sort((a, b) => a.localeCompare(b));
+    return ['Tutti', ...cats];
+  }, [allProducts]);
 
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out'>('all');
   const [alphaFilter, setAlphaFilter] = useState<string | null>(null);
@@ -82,13 +83,13 @@ const ProductsPage: React.FC = () => {
 
       <ScrollArrows className="mb-4">
         <div className="flex gap-2 w-max pb-2">
-          {CATEGORIES.map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => { setSelectedCategory(cat); setAlphaFilter(null); }}
               className={`px-4 py-1.5 rounded-full font-label-md text-label-md transition-colors cursor-pointer active:scale-93 ${
                 selectedCategory === cat
-                  ? 'bg-primary-container text-on-primary shadow-[0_2px_8px_rgba(114,47,55,0.08)] font-semibold'
+                  ? 'bg-primary-container text-on-primary shadow-[0_2px_8px_rgba(15,10,8,0.4)] font-semibold'
                   : 'border border-outline-variant text-on-surface-variant hover:bg-surface-variant'
               }`}
             >
@@ -150,7 +151,7 @@ const ProductsPage: React.FC = () => {
               <span className="material-symbols-outlined text-[16px]">{f.icon}</span>
               {f.label}
               <span className={`ml-0.5 text-[11px] px-1.5 py-0.5 rounded-full ${
-                stockFilter === f.key ? 'bg-on-primary/20' : 'bg-outline-variant/30'
+                stockFilter === f.key ? 'bg-primary/25' : 'bg-outline-variant/30'
               }`}>{count}</span>
             </button>
           );
@@ -178,32 +179,32 @@ const ProductsPage: React.FC = () => {
                       chevron_right
                     </span>
                     <h2 className="font-title-md text-title-md text-primary tracking-tight flex-1 text-left">{category}</h2>
-                    <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-primary-container/30 text-primary-container font-semibold">{catCount}</span>
+                    <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-primary/30 text-primary font-semibold">{catCount}</span>
                   </button>
 
                   {!isCollapsed && (
                     <div className="px-5 pb-5">
                       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
                         {products.map((product) => {
-                          const dot = product.stock === 0 ? 'bg-[#494441]' : product.stock <= (product.min_stock || 2) ? 'bg-[#ba1a1a]' : 'bg-[#4a7c59]';
+                          const dot = product.stock === 0 ? 'bg-tertiary' : product.stock <= (product.min_stock || 2) ? 'bg-error' : 'bg-success';
                           return (
                             <div
                               key={product.id}
                               onClick={() => { selectProduct(product.id); navigate(`/prodotti/${product.id}`); }}
-                              className="product-card bg-[#FFFDD0] rounded-3xl border border-[#E5E0D6] overflow-hidden flex flex-col relative cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
+                              className="product-card bg-card rounded-3xl border border-outline-variant overflow-hidden flex flex-col relative cursor-pointer hover:-translate-y-1.5 hover:shadow-xl transition-all duration-200 active:scale-[0.97]"
                             >
                               <div className="h-32 md:h-40 bg-surface-variant relative overflow-hidden">
                                 {product.image_url ? (
                                   <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
                                 ) : null}
-                                <div className={`absolute top-2 right-2 w-3.5 h-3.5 rounded-full ${dot} border-2 border-[#FFFDD0] shadow-sm`} title={`Scorta: ${product.stock}`} />
+                                <div className={`absolute top-2 right-2 w-3.5 h-3.5 rounded-full ${dot} border-2 border-card shadow-sm`} title={`Scorta: ${product.stock}`} />
                               </div>
 
                               <div className="p-3.5 flex flex-col flex-1">
                                 {product.supplier && <span className="text-[10px] uppercase tracking-wider text-outline mb-1 font-semibold">{product.supplier}</span>}
                                 <h3 className="font-headline-md text-[16px] leading-tight text-primary mb-1 flex-1 line-clamp-2">{product.name}</h3>
                                 {product.format && <span className="text-[10px] text-outline mb-1">{product.format}</span>}
-                                <div className="font-label-md text-label-md text-primary-container font-bold">€{Number(product.price || 0).toFixed(2)}</div>
+                                <div className="font-label-md text-label-md text-primary font-bold">€{Number(product.price || 0).toFixed(2)}</div>
                               </div>
                             </div>
                           );
@@ -220,7 +221,7 @@ const ProductsPage: React.FC = () => {
 
       <button
         onClick={() => navigate('/prodotti/nuovo')}
-        className="fixed bottom-24 right-5 lg:bottom-8 lg:right-8 w-14 h-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center cursor-pointer active:scale-90 hover:bg-primary/90 transition-colors z-30"
+        className="fixed bottom-24 right-5 lg:bottom-8 lg:right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center cursor-pointer active:scale-90 hover:bg-primary/90 transition-colors z-30"
         title="Aggiungi prodotto"
       >
         <span className="material-symbols-outlined text-[28px]">add</span>
