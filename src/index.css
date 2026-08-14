@@ -206,11 +206,17 @@
 
   body {
     background-color: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background-image: linear-gradient(rgba(26, 19, 13, 0.35), rgba(26, 19, 13, 0.35)), url('/sfondo-legno.webp');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-    color: var(--text-primary);
   }
 
   ::selection {
